@@ -9,3 +9,4 @@ cv/build
 
 # Raw source files for notes (large; not served by the site)
 notes-source/
+dist-ssr

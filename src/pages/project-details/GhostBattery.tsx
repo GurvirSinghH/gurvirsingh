@@ -3,7 +3,6 @@ import { Link } from "react-router";
 import LinkButton from "../../components/LinkButton";
 import SectionHeading from "../../components/SectionHeading";
 import { getProject } from "../../data/projects";
-import { useDocumentTitle } from "../../lib/useDocumentTitle";
 
 /*
  * Ghost Battery — idea / research exploration page.
@@ -80,8 +79,6 @@ function SubHeading({ children }: { children: ReactNode }) {
 }
 
 export default function GhostBattery() {
-  useDocumentTitle(project.title);
-
   const hasLinks = project.github !== undefined || project.demo || project.video;
 
   return (

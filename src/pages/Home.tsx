@@ -4,7 +4,6 @@ import { getProject, projects, type Project } from "../data/projects";
 import { isPlaceholder, site } from "../data/site";
 import { formatDate } from "../lib/formatDate";
 import { notes } from "../lib/notes";
-import { useDocumentTitle } from "../lib/useDocumentTitle";
 
 const learning = [
   {
@@ -49,8 +48,6 @@ function WorkEntry({ project }: { project: Project }) {
 }
 
 export default function Home() {
-  useDocumentTitle();
-
   // Same projects as "Selected Work" on the Projects page.
   const selectedWork = projects.filter((p) => p.section === "selected");
   const idea = getProject("ghost-battery");

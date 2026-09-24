@@ -28,7 +28,10 @@ npm run preview   # serve the production build
 | External writing (articles on other sites) | `src/data/externalWriting.ts` |
 | Colours and fonts | `src/index.css` (`@theme` block) |
 | Blog article typography | `src/index.css` (`.article` rules) |
-| Page title, description, Open Graph tags | `index.html` |
+| Page titles and descriptions (tab title, link previews) | `src/lib/pageMeta.ts` |
+| Site URL (canonical, Open Graph, sitemap) | `url` in `src/data/site.ts` |
+| Link-preview image (1200×630) | `public/og-image.png` |
+| Prerendering, sitemap.xml, robots.txt | `scripts/prerender.mjs` |
 
 Reusable components are in `src/components/`: `Navbar`, `Footer`, `ProjectCard`, `PostCard`,
 `ExternalArticleCard`, `SectionHeading`, `LinkButton`, `PageHeader`, `Placeholder`.
@@ -43,7 +46,7 @@ files are rendered with a yellow marker until they are replaced.
 - **Ghost Battery:** currently an idea with no repository. If you create one, add
   `github: "https://…"` to its entry in `src/data/projects.ts`.
 - **Education:** `institution` and `expectedGraduation` in `src/data/site.ts`.
-- **Domain:** once deployed, add `canonical`, `og:url` and `og:image` in `index.html`.
+- **Domain:** if the site moves to a custom domain, change `url` in `src/data/site.ts`.
 
 ## Adding a project
 
@@ -142,9 +145,10 @@ The CV page's download link uses `cvUrl` in `src/data/site.ts`. `cv/build/` is n
 
 ## Deploying
 
-The site uses client-side routing, so the host must serve `index.html` for unknown paths
-(e.g. `/projects/ghost-battery`, `/blog/what-is-piml`):
+`npm run build` prerenders every page to static HTML (`dist/index.html`, `dist/projects.html`,
+`dist/notes/<slug>.html`, …) with its own title, description, canonical URL and Open Graph tags,
+plus `dist/404.html`, `dist/sitemap.xml` and `dist/robots.txt`. React then takes over in the
+browser. New notes, posts and details pages are picked up automatically from `src/lib/pageMeta.ts`.
 
-- **Netlify:** add `public/_redirects` containing `/*  /index.html  200`.
-- **Vercel:** add `vercel.json` with `{ "rewrites": [{ "source": "/(.*)", "destination": "/" }] }`.
-- **GitHub Pages:** copy `dist/index.html` to `dist/404.html` after building.
+The site is deployed on Vercel. `vercel.json` sets `cleanUrls` so `/projects` serves
+`projects.html`, and redirects the old `/contact` page to `/about`. Unknown paths get `404.html`.

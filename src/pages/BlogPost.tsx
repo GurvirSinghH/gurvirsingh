@@ -1,13 +1,11 @@
 import { Link, useParams } from "react-router";
 import { getPost } from "../lib/blog";
 import { formatDate } from "../lib/formatDate";
-import { useDocumentTitle } from "../lib/useDocumentTitle";
 import NotFound from "./NotFound";
 
 export default function BlogPostPage() {
   const { slug = "" } = useParams();
   const post = getPost(slug);
-  useDocumentTitle(post ? post.title : "Page not found");
 
   if (!post) return <NotFound />;
 

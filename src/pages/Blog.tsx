@@ -5,11 +5,8 @@ import SectionHeading from "../components/SectionHeading";
 import { externalWriting } from "../data/externalWriting";
 import { isPlaceholder } from "../data/site";
 import { posts } from "../lib/blog";
-import { useDocumentTitle } from "../lib/useDocumentTitle";
 
 export default function Blog() {
-  useDocumentTitle("Blog");
-
   // External articles, newest first; entries without a real date go last.
   const external = [...externalWriting].sort((a, b) => {
     const aUndated = isPlaceholder(a.date);

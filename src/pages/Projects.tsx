@@ -3,7 +3,6 @@ import { ProjectList, type ProjectCardVariant } from "../components/ProjectCard"
 import SectionHeading from "../components/SectionHeading";
 import { projects, type ProjectSection } from "../data/projects";
 import { site } from "../data/site";
-import { useDocumentTitle } from "../lib/useDocumentTitle";
 
 const sections: {
   id: ProjectSection;
@@ -22,8 +21,6 @@ const sections: {
 ];
 
 export default function Projects() {
-  useDocumentTitle("Projects");
-
   return (
     <>
       <PageHeader title="Projects">

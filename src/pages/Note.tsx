@@ -1,13 +1,11 @@
 import { Link, useParams } from "react-router";
 import { formatDate } from "../lib/formatDate";
 import { getNote } from "../lib/notes";
-import { useDocumentTitle } from "../lib/useDocumentTitle";
 import NotFound from "./NotFound";
 
 export default function NotePage() {
   const { slug = "" } = useParams();
   const note = getNote(slug);
-  useDocumentTitle(note ? note.title : "Page not found");
 
   if (!note) return <NotFound />;
 

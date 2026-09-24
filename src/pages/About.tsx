@@ -4,7 +4,6 @@ import PageHeader from "../components/PageHeader";
 import { Value } from "../components/Placeholder";
 import SectionHeading from "../components/SectionHeading";
 import { site } from "../data/site";
-import { useDocumentTitle } from "../lib/useDocumentTitle";
 
 /** "A · B · C". Lines only break between items, so no line starts with "·". */
 function Separated({ items }: { items: string[] }) {
@@ -36,7 +35,6 @@ function LabeledRow({ label, items }: { label: string; items: string[] }) {
 }
 
 export default function About() {
-  useDocumentTitle("About");
   const { education } = site;
 
   return (

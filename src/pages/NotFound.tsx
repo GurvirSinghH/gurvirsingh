@@ -1,10 +1,7 @@
 import { Link } from "react-router";
 import PageHeader from "../components/PageHeader";
-import { useDocumentTitle } from "../lib/useDocumentTitle";
 
 export default function NotFound() {
-  useDocumentTitle("Page not found");
-
   return (
     <>
       <PageHeader title="Page not found">

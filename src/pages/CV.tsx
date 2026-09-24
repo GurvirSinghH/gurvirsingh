@@ -3,11 +3,8 @@ import LinkButton from "../components/LinkButton";
 import PageHeader from "../components/PageHeader";
 import Placeholder from "../components/Placeholder";
 import { site } from "../data/site";
-import { useDocumentTitle } from "../lib/useDocumentTitle";
 
 export default function CV() {
-  useDocumentTitle("CV");
-
   return (
     <>
       <PageHeader title="Curriculum Vitae" />

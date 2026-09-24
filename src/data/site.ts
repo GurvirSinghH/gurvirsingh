@@ -20,6 +20,10 @@ export const site = {
   shortDegree: "B.Tech CSE — AI & Data Science",
   location: "India",
 
+  // Address of the live site, without a trailing slash. Used for canonical URLs,
+  // Open Graph tags and the sitemap.
+  url: "https://gurvir-singh-website.vercel.app",
+
   github: "https://github.com/GurvirSinghH",
 
   // LinkedIn profile URL, e.g. "https://www.linkedin.com/in/…". Hidden while null.

@@ -4,11 +4,8 @@ import SectionHeading from "../components/SectionHeading";
 import { NOTE_CATEGORIES } from "../data/noteCategories";
 import { formatDate } from "../lib/formatDate";
 import { notes } from "../lib/notes";
-import { useDocumentTitle } from "../lib/useDocumentTitle";
 
 export default function Notes() {
-  useDocumentTitle("Research Notes");
-
   // One section per category that has notes, in the order the categories are declared.
   // Notes stay newest first inside each section.
   const sections = NOTE_CATEGORIES.map((category) => ({
