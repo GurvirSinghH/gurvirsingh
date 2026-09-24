@@ -65,8 +65,7 @@ export default function About() {
             Ghost Battery
           </Link>
           , an attempt to think about how observable telemetry and physical knowledge might be
-          used to reason about hidden energy states. It is still only an idea and has not been
-          built or validated.
+          used to reason about hidden energy states.
         </p>
       </div>
 
@@ -110,6 +109,36 @@ export default function About() {
           <LabeledRow label="Languages" items={site.languages} />
           <LabeledRow label="ML & data" items={site.mlTools} />
         </div>
+      </section>
+
+      <section aria-labelledby="contact" className="mt-12">
+        <SectionHeading id="contact">Contact</SectionHeading>
+        <dl className="grid grid-cols-[5rem_1fr] gap-y-2">
+          <dt className="text-faint">Email</dt>
+          <dd className="break-all">
+            <a href={`mailto:${site.email}`} className="link">
+              {site.email}
+            </a>
+          </dd>
+
+          <dt className="text-faint">GitHub</dt>
+          <dd className="break-all">
+            <a href={site.github} className="link">
+              {site.github.replace(/^https:\/\//, "")}
+            </a>
+          </dd>
+
+          {site.linkedin && (
+            <>
+              <dt className="text-faint">LinkedIn</dt>
+              <dd className="break-all">
+                <a href={site.linkedin} className="link">
+                  {site.linkedin.replace(/^https:\/\/(www\.)?/, "")}
+                </a>
+              </dd>
+            </>
+          )}
+        </dl>
       </section>
     </>
   );

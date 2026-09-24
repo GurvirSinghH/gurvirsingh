@@ -41,8 +41,6 @@ export default function Notes() {
                   </h3>
                   <p className="mt-0.5 text-sm text-faint">
                     <time dateTime={note.date}>{formatDate(note.date)}</time>
-                    {" · "}
-                    {note.category}
                   </p>
                   {note.description && <p className="mt-1.5">{note.description}</p>}
                 </li>

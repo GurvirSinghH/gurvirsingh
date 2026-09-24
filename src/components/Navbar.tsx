@@ -1,20 +1,40 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router";
+import { externalWriting } from "../data/externalWriting";
 import { site } from "../data/site";
+import { posts } from "../lib/blog";
 
+// Blog is only listed once there is something to read. The CV item opens the PDF
+// directly when there is one, and the /cv page otherwise.
 const navItems = [
   { to: "/projects", label: "Projects" },
-  { to: "/blog", label: "Blog" },
+  ...(posts.length > 0 || externalWriting.length > 0 ? [{ to: "/blog", label: "Blog" }] : []),
   { to: "/notes", label: "Research Notes" },
   { to: "/about", label: "About" },
-  { to: "/cv", label: "CV" },
-  { to: "/contact", label: "Contact" },
+  site.cvUrl ? { href: site.cvUrl, label: "CV" } : { to: "/cv", label: "CV" },
 ];
+
+type NavItem = (typeof navItems)[number];
 
 function navClass({ isActive }: { isActive: boolean }) {
   return isActive
     ? "text-ink underline decoration-1 underline-offset-[6px]"
     : "text-muted hover:text-accent";
+}
+
+function NavItemLink({ item, className = "" }: { item: NavItem; className?: string }) {
+  if ("href" in item) {
+    return (
+      <a href={item.href} className={`${className} ${navClass({ isActive: false })}`}>
+        {item.label}
+      </a>
+    );
+  }
+  return (
+    <NavLink to={item.to} className={(s) => `${className} ${navClass(s)}`}>
+      {item.label}
+    </NavLink>
+  );
 }
 
 export default function Navbar() {
@@ -46,10 +66,8 @@ export default function Navbar() {
 
           <ul className="hidden gap-7 sm:flex">
             {navItems.map((item) => (
-              <li key={item.to}>
-                <NavLink to={item.to} className={navClass}>
-                  {item.label}
-                </NavLink>
+              <li key={item.label}>
+                <NavItemLink item={item} />
               </li>
             ))}
           </ul>
@@ -83,10 +101,8 @@ export default function Navbar() {
 
         <ul id="mobile-menu" hidden={!open} className="border-t border-rule py-2 sm:hidden">
           {navItems.map((item) => (
-            <li key={item.to}>
-              <NavLink to={item.to} className={(s) => `block py-2.5 ${navClass(s)}`}>
-                {item.label}
-              </NavLink>
+            <li key={item.label}>
+              <NavItemLink item={item} className="block py-2.5" />
             </li>
           ))}
         </ul>

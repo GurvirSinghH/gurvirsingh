@@ -16,6 +16,9 @@
  *            then shows a clearly marked placeholder.
  *   demo     Live demo URL. Omit if there is no live demo.
  *   video    Demo video URL. Omit if there is no video.
+ *   image    Screenshot or GIF shown on the Projects page (Selected Work), e.g.
+ *            { src: "/images/projects/log-platform.png", alt: "Dashboard with…" }.
+ *            Put the file in public/images/projects/. Omit if there is none.
  *   details  Internal route to a details page, e.g. "/projects/ghost-battery".
  *            The page component must also be registered in
  *            src/pages/project-details/index.tsx.
@@ -32,6 +35,7 @@ export interface Project {
   github?: string | null;
   demo?: string;
   video?: string;
+  image?: { src: string; alt: string };
   details?: string;
   status: string;
   section: ProjectSection;
@@ -46,12 +50,14 @@ export const projects: Project[] = [
       "A Streamlit application for analyzing system log files. It parses logs into structured entries, provides statistics and visualizations, performs anomaly detection with Isolation Forest, and groups unusual entries using K-Means. It can optionally draft an incident report with Google Gemini.",
     technologies: ["Python", "Streamlit", "Pandas", "Scikit-learn", "Plotly", "Gemini API"],
     github: "https://github.com/GurvirSinghH/AI-Log-Intelligence-Platform",
+    // TODO: add a screenshot or GIF: image: { src: "/images/projects/….png", alt: "…" },
     status: "Active development",
     section: "selected",
   },
   {
     // The repository is "neural-forge"; its README is titled "AI Blender Assistant".
     slug: "neural-forge",
+    // TODO: add a screenshot or GIF: image: { src: "/images/projects/….png", alt: "…" },
     title: "Neural Forge (AI Blender Assistant)",
     description:
       "A Blender add-on that generates Python scripts for Blender tasks using Google Gemini, OpenAI, Ollama (local models) or any OpenAI-compatible API. It can include scene context in the prompt, auto-execute generated scripts, and ask the model to fix a script that fails. Generated scripts are kept in a history with View, Run and Copy actions, and a Quick Prompts panel offers example prompts.",
@@ -67,6 +73,7 @@ export const projects: Project[] = [
       "A production-oriented crawler that collects pages and documents from a college website and prepares them as a dataset for a future RAG pipeline. It respects robots.txt, crawls concurrently with retries and backoff, extracts structured page content and metadata, downloads linked documents, and stores crawl information in SQLite.",
     technologies: ["Python", "Requests", "BeautifulSoup", "lxml", "SQLite", "YAML"],
     github: "https://github.com/GurvirSinghH/college-rag-assistant",
+    // TODO: add a screenshot or GIF: image: { src: "/images/projects/….png", alt: "…" },
     status: "Crawler implemented; RAG pipeline not built yet",
     section: "selected",
   },

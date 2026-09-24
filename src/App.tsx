@@ -1,9 +1,8 @@
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import Layout from "./components/Layout";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
 import BlogPostPage from "./pages/BlogPost";
-import Contact from "./pages/Contact";
 import CV from "./pages/CV";
 import Home from "./pages/Home";
 import NotePage from "./pages/Note";
@@ -25,7 +24,8 @@ export default function App() {
         <Route path="notes/:slug" element={<NotePage />} />
         <Route path="about" element={<About />} />
         <Route path="cv" element={<CV />} />
-        <Route path="contact" element={<Contact />} />
+        {/* Contact details now live on the About page. */}
+        <Route path="contact" element={<Navigate to="/about" replace />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

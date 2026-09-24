@@ -204,11 +204,9 @@ One reason I found this topic interesting is that it connects with
 an idea I have been exploring around Formula 1 telemetry and energy
 use.
 
-I call that idea **Ghost Battery**.
-
-It is still only an idea and has not been built or validated. For now,
-I am treating it as a possible future problem where I could explore
-whether physics-informed machine learning might be useful.
+I call that idea [Ghost Battery](/projects/ghost-battery): a possible
+future problem where I could explore whether physics-informed machine
+learning might be useful.
 
 Before trying to apply PIML to that idea, I need to understand the
 fundamentals first.

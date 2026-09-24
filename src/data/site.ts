@@ -22,6 +22,9 @@ export const site = {
 
   github: "https://github.com/GurvirSinghH",
 
+  // LinkedIn profile URL, e.g. "https://www.linkedin.com/in/…". Hidden while null.
+  linkedin: null as string | null,
+
   // TODO: replace with your email address, e.g. "name@example.com".
   email: "gurvir.singh.panesar@gmail.com",
 

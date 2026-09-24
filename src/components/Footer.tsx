@@ -7,10 +7,18 @@ export default function Footer() {
         <p>
           © {new Date().getFullYear()} {site.name}
         </p>
-        <p>
+        <p className="flex flex-wrap gap-x-4">
+          <a href={`mailto:${site.email}`} className="link">
+            {site.email}
+          </a>
           <a href={site.github} className="link">
             GitHub
           </a>
+          {site.linkedin && (
+            <a href={site.linkedin} className="link">
+              LinkedIn
+            </a>
+          )}
         </p>
       </div>
     </footer>

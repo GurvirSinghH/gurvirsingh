@@ -64,8 +64,8 @@ export default function Home() {
           {site.name}
         </h1>
         <p className="mt-2 text-muted">
-          Computer Science &amp; AI student exploring machine learning, data, and intelligent
-          systems.
+          I build machine learning tools for messy real-world data — from log anomaly detection
+          to LLM-driven Blender scripting — and I am learning physics-informed machine learning.
         </p>
 
         <div className="mt-3 flex flex-col text-sm leading-relaxed md:flex-row md:flex-wrap md:justify-between md:gap-x-6">
@@ -90,6 +90,14 @@ export default function Home() {
             </a>
             {" "}
             <span className="text-faint">·</span>{" "}
+            {site.linkedin && (
+              <>
+                <a href={site.linkedin} className="link">
+                  LinkedIn
+                </a>{" "}
+                <span className="text-faint">·</span>{" "}
+              </>
+            )}
             {site.cvUrl ? (
               <a href={site.cvUrl} className="link whitespace-nowrap">
                 CV (PDF)
@@ -102,18 +110,31 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="mt-5 space-y-3 leading-relaxed">
-          <p>
-            I enjoy learning how things work, building with what I learn, and solving problems
-            along the way. My interests currently lie in AI/ML, data science, and
-            physics-informed machine learning, with a broader curiosity about technology and its
-            applications across different fields.
-          </p>
-          <p>
-            I learn with the goal of understanding things well enough to build with them, explain
-            them to others, and help solve problems.
-          </p>
-        </div>
+        <p className="mt-5 leading-relaxed">
+          I enjoy learning how things work, building with what I learn, and solving problems
+          along the way. My interests currently lie in AI/ML, data science, and physics-informed
+          machine learning, with a broader curiosity about technology and its applications across
+          different fields.
+        </p>
+      </section>
+
+      <section aria-labelledby="selected-work" className="mt-10">
+        <SectionHeading
+          id="selected-work"
+          aside={
+            <Link to="/projects" className="link">
+              All projects
+            </Link>
+          }
+        >
+          Selected work
+        </SectionHeading>
+
+        <ul className="divide-y divide-rule">
+          {selectedWork.map((project) => (
+            <WorkEntry key={project.slug} project={project} />
+          ))}
+        </ul>
       </section>
 
       <section aria-labelledby="currently-learning" className="mt-10">
@@ -171,25 +192,6 @@ export default function Home() {
             )}
           </div>
         )}
-      </section>
-
-      <section aria-labelledby="selected-work" className="mt-10">
-        <SectionHeading
-          id="selected-work"
-          aside={
-            <Link to="/projects" className="link">
-              All projects
-            </Link>
-          }
-        >
-          Selected work
-        </SectionHeading>
-
-        <ul className="divide-y divide-rule">
-          {selectedWork.map((project) => (
-            <WorkEntry key={project.slug} project={project} />
-          ))}
-        </ul>
       </section>
     </>
   );

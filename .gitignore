@@ -6,3 +6,6 @@ cv/build
 
 .vercel
 .env*
+
+# Raw source files for notes (large; not served by the site)
+notes-source/

@@ -121,6 +121,14 @@ export default function ProjectCard({
       <p className={compact ? "mt-1" : "mt-1.5"}>
         {compact ? firstSentence(description) : description}
       </p>
+      {!compact && project.image && (
+        <img
+          src={project.image.src}
+          alt={project.image.alt}
+          loading="lazy"
+          className="mt-3 w-full border border-rule"
+        />
+      )}
       <div
         className={`flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm ${compact ? "mt-1" : "mt-2"}`}
       >

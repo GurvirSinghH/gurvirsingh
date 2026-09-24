@@ -124,11 +124,6 @@ export default function GhostBattery() {
         )}
       </header>
 
-      <p className="mt-8 max-w-2xl border border-rule bg-wash px-4 py-3">
-        Ghost Battery is an idea I am exploring as I learn more about Physics-Informed Machine
-        Learning. It is not currently built or validated.
-      </p>
-
       <nav aria-labelledby="contents" className="mt-10 border-y border-rule py-4 text-sm">
         <h2 id="contents" className="font-serif text-xl font-semibold text-ink">
           Contents
@@ -231,7 +226,7 @@ export default function GhostBattery() {
           </table>
         </div>
 
-        <SubHeading>Conceptual pipeline (proposed, not implemented)</SubHeading>
+        <SubHeading>Conceptual pipeline</SubHeading>
         <p>A possible sequence of stages, from public data to decision support:</p>
 
         <ol className="space-y-0">
