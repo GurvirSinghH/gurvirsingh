@@ -3,16 +3,11 @@ import PageHeader from "../components/PageHeader";
 import { PostList } from "../components/PostCard";
 import SectionHeading from "../components/SectionHeading";
 import { externalWriting } from "../data/externalWriting";
-import { isPlaceholder } from "../data/site";
 import { posts } from "../lib/blog";
 
 export default function Blog() {
-  // External articles, newest first; entries without a real date go last.
-  const external = [...externalWriting].sort((a, b) => {
-    const aUndated = isPlaceholder(a.date);
-    if (aUndated !== isPlaceholder(b.date)) return aUndated ? 1 : -1;
-    return b.date.localeCompare(a.date);
-  });
+  // External articles, newest first.
+  const external = [...externalWriting].sort((a, b) => b.date.localeCompare(a.date));
 
   return (
     <>

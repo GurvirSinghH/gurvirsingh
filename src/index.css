@@ -13,8 +13,6 @@
   --color-wash: #f7f7f5; /* subtle background for callouts */
   --color-accent: #1b4f8a; /* links */
   --color-accent-dark: #123a66; /* link hover */
-  --color-todo-bg: #fff3d1;
-  --color-todo-ink: #6e4600;
 }
 
 @layer base {
@@ -118,16 +116,7 @@
   }
 
   .article a {
-    color: var(--color-accent);
-    text-decoration-line: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-    text-decoration-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
-  }
-
-  .article a:hover {
-    color: var(--color-accent-dark);
-    text-decoration-color: currentColor;
+    @apply link;
   }
 
   .article strong {

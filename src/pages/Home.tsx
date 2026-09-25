@@ -1,7 +1,8 @@
 import { Link } from "react-router";
+import { ProjectList } from "../components/ProjectCard";
 import SectionHeading from "../components/SectionHeading";
-import { getProject, projects, type Project } from "../data/projects";
-import { isPlaceholder, site } from "../data/site";
+import { getProject, projects } from "../data/projects";
+import { site } from "../data/site";
 import { formatDate } from "../lib/formatDate";
 import { notes } from "../lib/notes";
 
@@ -19,33 +20,6 @@ const learning = [
     note: "Working with data and systems through projects, and exploring technical problems outside these areas too.",
   },
 ];
-
-/** "First sentence. Second sentence." → "First sentence." */
-function firstSentence(text: string): string {
-  return text.match(/^.+?[.!?](?=\s|$)/)?.[0] ?? text;
-}
-
-/** Compact, text-only entry for a built project (the Projects page uses ProjectCard). */
-function WorkEntry({ project }: { project: Project }) {
-  return (
-    <li className="py-4 first:pt-0 last:pb-0">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-        <h3 className="font-serif text-lg font-semibold leading-snug text-ink">{project.title}</h3>
-        <p className="text-sm text-faint">{project.status}</p>
-      </div>
-      <p className="mt-1">{firstSentence(project.description)}</p>
-      <div className="mt-1 flex flex-wrap items-baseline justify-between gap-x-4 text-sm">
-        <p className="text-muted">{project.technologies.join(" · ")}</p>
-        {project.github && (
-          <a href={project.github} className="link">
-            Code<span className="sr-only">: {project.title} on GitHub</span>{" "}
-            <span aria-hidden="true">↗</span>
-          </a>
-        )}
-      </div>
-    </li>
-  );
-}
 
 export default function Home() {
   // Same projects as "Selected Work" on the Projects page.
@@ -67,21 +41,17 @@ export default function Home() {
 
         <div className="mt-3 flex flex-col text-sm leading-relaxed md:flex-row md:flex-wrap md:justify-between md:gap-x-6">
           <p>
-            B.Tech CSE (AI &amp; Data Science) <span className="text-faint">·</span>{" "}
+            {site.shortDegree} <span className="text-faint">·</span>{" "}
             <span className="whitespace-nowrap">{university}</span>{" "}
             <span className="text-faint">·</span>{" "}
             <span className="whitespace-nowrap">{site.education.year}</span>
           </p>
           <p>
-            {!isPlaceholder(site.email) && (
-              <>
-                <a href={`mailto:${site.email}`} className="link">
-                  {site.email}
-                </a>
-                {" "}
-                <span className="text-faint">·</span>{" "}
-              </>
-            )}
+            <a href={`mailto:${site.email}`} className="link">
+              {site.email}
+            </a>
+            {" "}
+            <span className="text-faint">·</span>{" "}
             <a href={site.github} className="link">
               GitHub
             </a>
@@ -91,19 +61,14 @@ export default function Home() {
               <>
                 <a href={site.linkedin} className="link">
                   LinkedIn
-                </a>{" "}
+                </a>
+                {" "}
                 <span className="text-faint">·</span>{" "}
               </>
             )}
-            {site.cvUrl ? (
-              <a href={site.cvUrl} className="link whitespace-nowrap">
-                CV (PDF)
-              </a>
-            ) : (
-              <Link to="/cv" className="link">
-                CV
-              </Link>
-            )}
+            <a href={site.cvUrl} className="link whitespace-nowrap">
+              CV (PDF)
+            </a>
           </p>
         </div>
 
@@ -127,11 +92,7 @@ export default function Home() {
           Selected work
         </SectionHeading>
 
-        <ul className="divide-y divide-rule">
-          {selectedWork.map((project) => (
-            <WorkEntry key={project.slug} project={project} />
-          ))}
-        </ul>
+        <ProjectList projects={selectedWork} variant="summary" />
       </section>
 
       <section aria-labelledby="currently-learning" className="mt-10">

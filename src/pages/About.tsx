@@ -1,26 +1,8 @@
-import { Fragment } from "react";
 import { Link } from "react-router";
 import PageHeader from "../components/PageHeader";
-import { Value } from "../components/Placeholder";
 import SectionHeading from "../components/SectionHeading";
+import Separated from "../components/Separated";
 import { site } from "../data/site";
-
-/** "A · B · C". Lines only break between items, so no line starts with "·". */
-function Separated({ items }: { items: string[] }) {
-  return (
-    <>
-      {items.map((item, i) => (
-        <Fragment key={item}>
-          <span className="whitespace-nowrap">
-            {item}
-            {i < items.length - 1 && " ·"}
-          </span>
-          {i < items.length - 1 && " "}
-        </Fragment>
-      ))}
-    </>
-  );
-}
 
 /** A small grey label with its values on the line below. */
 function LabeledRow({ label, items }: { label: string; items: string[] }) {
@@ -71,10 +53,10 @@ export default function About() {
         <SectionHeading id="education">Education</SectionHeading>
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
           <h3 className="font-serif text-lg font-semibold leading-snug text-ink">
-            <Value value={education.institution} />
+            {education.institution}
           </h3>
           <p className="text-sm text-faint">
-            Expected <Value value={education.expectedGraduation} />
+            Expected {education.expectedGraduation}
           </p>
         </div>
         <p className="mt-1">
@@ -82,8 +64,8 @@ export default function About() {
           {" "}— {education.specialization}
         </p>
         <p className="mt-0.5 text-muted">
-          <Value value={education.year} />
-          {" "}· CGPA <Value value={education.cgpa} />
+          {education.year}
+          {" "}· CGPA {education.cgpa}
         </p>
         <p className="mt-2 text-sm leading-relaxed">
           <span className="text-faint">Current coursework:</span>{" "}

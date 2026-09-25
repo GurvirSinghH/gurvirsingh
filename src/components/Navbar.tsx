@@ -4,14 +4,13 @@ import { externalWriting } from "../data/externalWriting";
 import { site } from "../data/site";
 import { posts } from "../lib/blog";
 
-// Blog is only listed once there is something to read. The CV item opens the PDF
-// directly when there is one, and the /cv page otherwise.
+// Blog is only listed once there is something to read. CV opens the PDF directly.
 const navItems = [
   { to: "/projects", label: "Projects" },
   ...(posts.length > 0 || externalWriting.length > 0 ? [{ to: "/blog", label: "Blog" }] : []),
   { to: "/notes", label: "Research Notes" },
   { to: "/about", label: "About" },
-  site.cvUrl ? { href: site.cvUrl, label: "CV" } : { to: "/cv", label: "CV" },
+  { href: site.cvUrl, label: "CV" },
 ];
 
 type NavItem = (typeof navItems)[number];

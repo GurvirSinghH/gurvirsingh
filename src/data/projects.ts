@@ -11,9 +11,7 @@
  *            "exploration" → Exploration (ideas, not built projects)
  *   technologies  Tools actually used. Leave empty (e.g. for an idea) to
  *            hide the Technology row.
- *   github   Repository URL. Omit if there is no repository. Use `null` only
- *            while a repository exists but its URL is not final; the card
- *            then shows a clearly marked placeholder.
+ *   github   Repository URL. Omit if there is no repository.
  *   demo     Live demo URL. Omit if there is no live demo.
  *   video    Demo video URL. Omit if there is no video.
  *   image    Screenshot or GIF shown on the Projects page (Selected Work), e.g.
@@ -32,7 +30,7 @@ export interface Project {
   subtitle?: string;
   description: string;
   technologies: string[];
-  github?: string | null;
+  github?: string;
   demo?: string;
   video?: string;
   image?: { src: string; alt: string };

@@ -34,18 +34,17 @@ npm run preview   # serve the production build
 | Prerendering, sitemap.xml, robots.txt | `scripts/prerender.mjs` |
 
 Reusable components are in `src/components/`: `Navbar`, `Footer`, `ProjectCard`, `PostCard`,
-`ExternalArticleCard`, `SectionHeading`, `LinkButton`, `PageHeader`, `Placeholder`.
+`ExternalArticleCard`, `SectionHeading`, `LinkButton`, `PageHeader`, `Separated`.
 
-## Filling in placeholders
+## Updating content
 
-Search the project for `[TODO]`, `PLACEHOLDER` and `TODO:`. Strings like `"[TODO]"` in the data
-files are rendered with a yellow marker until they are replaced.
-
-- **Email:** set `email` in `src/data/site.ts`. It becomes a `mailto:` link automatically.
-- **CV:** see "Updating the CV" below.
-- **Ghost Battery:** currently an idea with no repository. If you create one, add
-  `github: "https://…"` to its entry in `src/data/projects.ts`.
-- **Education:** `institution` and `expectedGraduation` in `src/data/site.ts`.
+- **Personal details** (email, education, coursework, interests, skills): `src/data/site.ts`.
+- **Project screenshots:** each selected project has a `// TODO: add a screenshot or GIF` line in
+  `src/data/projects.ts`. Put the image in `public/images/projects/` and replace the line with
+  `image: { src: "/images/projects/<file>.png", alt: "What the screenshot shows" }`. It appears
+  on the Projects page.
+- **LinkedIn:** set `linkedin` in `src/data/site.ts` to show it on the home page, About and the
+  footer.
 - **Domain:** if the site moves to a custom domain, change `url` in `src/data/site.ts`.
 
 ## Adding a project
@@ -54,8 +53,7 @@ Append an object to `projects` in `src/data/projects.ts`. Only set `github` / `d
 when they really exist; the card shows a link only for fields that are set. Leave
 `technologies` empty to hide the Technology row (e.g. for an idea). Set `section` to `"selected"`
 (Selected Work), `"other"` (Other Projects) or `"exploration"` (ideas); projects appear in each
-section in the order they are listed. The home page picks its projects by slug in
-`src/pages/Home.tsx`.
+section in the order they are listed. The home page shows the `"selected"` projects.
 
 For a details page: create a component in `src/pages/project-details/`, register it in
 `src/pages/project-details/index.tsx`, and set `details: "/projects/<slug>"` on the project.
@@ -141,7 +139,7 @@ cp cv/build/gurvir-singh-cv.pdf public/files/gurvir-singh-cv.pdf
 ```
 
 Check that the PDF is still one page (`pdfinfo cv/build/gurvir-singh-cv.pdf`) before copying it.
-The CV page's download link uses `cvUrl` in `src/data/site.ts`. `cv/build/` is not committed.
+Links to the CV use `cvUrl` in `src/data/site.ts`. `cv/build/` is not committed.
 
 ## Deploying
 

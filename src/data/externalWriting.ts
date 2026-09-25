@@ -16,11 +16,10 @@
 export interface ExternalArticle {
   title: string;
   platform: string;
-  /** "YYYY-MM-DD", or "[TODO]" while unknown. */
+  /** "YYYY-MM-DD" */
   date: string;
   description: string;
-  /** The article's real URL, or null while this is still a placeholder. */
-  url: string | null;
+  url: string;
 }
 
 export const externalWriting: ExternalArticle[] = [];

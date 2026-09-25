@@ -79,7 +79,7 @@ function SubHeading({ children }: { children: ReactNode }) {
 }
 
 export default function GhostBattery() {
-  const hasLinks = project.github !== undefined || project.demo || project.video;
+  const hasLinks = project.github || project.demo || project.video;
 
   return (
     <article>
@@ -100,7 +100,7 @@ export default function GhostBattery() {
 
         {hasLinks && (
           <ul aria-label="Project links" className="mt-5 flex flex-wrap gap-2">
-            {project.github !== undefined && (
+            {project.github && (
               <li>
                 <LinkButton href={project.github} context="Ghost Battery repository">
                   GitHub
