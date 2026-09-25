@@ -13,6 +13,8 @@ export interface Note {
   /** "YYYY-MM-DD" */
   date: string;
   description: string;
+  /** Estimated reading time, computed at build time. */
+  readingMinutes: number;
   category: NoteCategory;
   html: string;
 }

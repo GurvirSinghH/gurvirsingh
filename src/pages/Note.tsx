@@ -19,6 +19,8 @@ export default function NotePage() {
           <time dateTime={note.date}>{formatDate(note.date)}</time>
           {" · "}
           {note.category}
+          {" · "}
+          {note.readingMinutes} min read
         </p>
       </header>
 

@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from "react-router";
 import { externalWriting } from "../data/externalWriting";
 import { site } from "../data/site";
 import { posts } from "../lib/blog";
+import ThemeToggle from "./ThemeToggle";
 
 // Blog is only listed once there is something to read. CV opens the PDF directly.
 const navItems = [
@@ -63,39 +64,43 @@ export default function Navbar() {
             {site.name}
           </Link>
 
-          <ul className="hidden gap-7 sm:flex">
-            {navItems.map((item) => (
-              <li key={item.label}>
-                <NavItemLink item={item} />
-              </li>
-            ))}
-          </ul>
+          <div className="flex items-center gap-1 sm:gap-5">
+            <ul className="hidden gap-7 sm:flex">
+              {navItems.map((item) => (
+                <li key={item.label}>
+                  <NavItemLink item={item} />
+                </li>
+              ))}
+            </ul>
 
-          <button
-            type="button"
-            className="-mr-2 p-2 text-ink hover:text-accent sm:hidden"
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            onClick={() => setOpen((o) => !o)}
-          >
-            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-            <svg
-              aria-hidden="true"
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.75"
-              strokeLinecap="round"
+            <ThemeToggle className="sm:-mr-2" />
+
+            <button
+              type="button"
+              className="-mr-2 p-2 text-ink hover:text-accent sm:hidden"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              onClick={() => setOpen((o) => !o)}
             >
-              {open ? (
-                <path d="M6 6l12 12M18 6L6 18" />
-              ) : (
-                <path d="M4 7h16M4 12h16M4 17h16" />
-              )}
-            </svg>
-          </button>
+              <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+              <svg
+                aria-hidden="true"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+              >
+                {open ? (
+                  <path d="M6 6l12 12M18 6L6 18" />
+                ) : (
+                  <path d="M4 7h16M4 12h16M4 17h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
         <ul id="mobile-menu" hidden={!open} className="border-t border-rule py-2 sm:hidden">

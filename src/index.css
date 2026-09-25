@@ -1,25 +1,56 @@
 @import "tailwindcss";
 
-/* Design tokens. Change colours and fonts here. */
+/*
+ * Design tokens. Change colours and fonts here.
+ * Colours are light-dark(<light mode>, <dark mode>) pairs. Which one applies is set by
+ * `color-scheme` on <html> below: the system setting, unless the visitor chose a theme
+ * with the navbar toggle (src/components/ThemeToggle.tsx).
+ */
 @theme {
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas, Menlo, monospace;
 
-  --color-ink: #1c1c1c; /* body text */
-  --color-muted: #4f4f4f; /* secondary text */
-  --color-faint: #6b6b6b; /* labels, footer */
-  --color-rule: #e2e2e2; /* borders and dividers */
-  --color-wash: #f7f7f5; /* subtle background for callouts */
-  --color-accent: #1b4f8a; /* links */
-  --color-accent-dark: #123a66; /* link hover */
+  --color-page: light-dark(#ffffff, #151515); /* page background */
+  --color-ink: light-dark(#1c1c1c, #e6e6e3); /* body text */
+  --color-muted: light-dark(#4f4f4f, #b5b5b0); /* secondary text */
+  --color-faint: light-dark(#6b6b6b, #8f8f8a); /* labels, footer */
+  --color-rule: light-dark(#e2e2e2, #2e2e2c); /* borders and dividers */
+  --color-wash: light-dark(#f7f7f5, #1e1e1d); /* subtle background for callouts */
+  --color-accent: light-dark(#1b4f8a, #8db8ec); /* links */
+  --color-accent-hover: light-dark(#123a66, #b8d3f5); /* link hover */
+}
+
+/*
+ * `dark:` utilities, e.g. `dark:hidden`: apply in dark mode, whether it comes from the
+ * system setting or from the toggle (which sets data-theme="light" or "dark" on <html>).
+ */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
 }
 
 @layer base {
   html {
-    background-color: #ffffff;
+    color-scheme: light dark;
+    background-color: var(--color-page);
     color: var(--color-ink);
     -webkit-text-size-adjust: 100%;
+  }
+
+  html[data-theme="light"] {
+    color-scheme: light;
+  }
+
+  html[data-theme="dark"] {
+    color-scheme: dark;
   }
 
   body {
@@ -43,7 +74,7 @@
   text-decoration-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
 
   &:hover {
-    color: var(--color-accent-dark);
+    color: var(--color-accent-hover);
     text-decoration-color: currentColor;
   }
 }

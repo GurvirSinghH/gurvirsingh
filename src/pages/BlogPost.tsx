@@ -17,6 +17,8 @@ export default function BlogPostPage() {
         </h1>
         <p className="mt-3 text-sm text-faint">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
+          {" · "}
+          {post.readingMinutes} min read
         </p>
         {post.description && (
           <p className="mt-4 text-lg leading-relaxed text-muted">{post.description}</p>

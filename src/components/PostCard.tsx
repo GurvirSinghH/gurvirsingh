@@ -14,6 +14,8 @@ export default function PostCard({ post }: { post: BlogPost }) {
       </h3>
       <p className="mt-0.5 text-sm text-faint">
         <time dateTime={post.date}>{formatDate(post.date)}</time>
+        {" · "}
+        {post.readingMinutes} min read
       </p>
 
       {post.description && <p className="mt-2">{post.description}</p>}

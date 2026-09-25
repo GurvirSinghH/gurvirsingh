@@ -11,6 +11,8 @@ export interface BlogPost {
   /** "YYYY-MM-DD" */
   date: string;
   description: string;
+  /** Estimated reading time, computed at build time. */
+  readingMinutes: number;
   tags: string[];
   html: string;
 }

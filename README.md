@@ -26,7 +26,8 @@ npm run preview   # serve the production build
 | Allowed research note categories | `src/data/noteCategories.ts` |
 | Markdown → HTML build step (blog and notes) | `plugins/markdownContent.ts` |
 | External writing (articles on other sites) | `src/data/externalWriting.ts` |
-| Colours and fonts | `src/index.css` (`@theme` block) |
+| Colours and fonts (each colour is a `light-dark(light, dark)` pair) | `src/index.css` (`@theme` block) |
+| Light/dark toggle (follows the system until clicked) | `src/components/ThemeToggle.tsx`, inline script in `index.html` |
 | Blog article typography | `src/index.css` (`.article` rules) |
 | Page titles and descriptions (tab title, link previews) | `src/lib/pageMeta.ts` |
 | Site URL (canonical, Open Graph, sitemap) | `url` in `src/data/site.ts` |
@@ -34,7 +35,7 @@ npm run preview   # serve the production build
 | Prerendering, sitemap.xml, robots.txt | `scripts/prerender.mjs` |
 
 Reusable components are in `src/components/`: `Navbar`, `Footer`, `ProjectCard`, `PostCard`,
-`ExternalArticleCard`, `SectionHeading`, `LinkButton`, `PageHeader`, `Separated`.
+`ExternalArticleCard`, `SectionHeading`, `LinkButton`, `PageHeader`, `Separated`, `ThemeToggle`.
 
 ## Updating content
 
@@ -120,7 +121,8 @@ with. They work like blog posts, with a category instead of tags.
    - `description` is optional. An optional `slug` overrides the file name in the URL.
    - As with blog posts, a `# ` line at the very top of the body is removed only if it repeats
      the title; other `#`, `##` and `###` headings are shown as headings.
-3. Run `npm run dev` or `npm run build`. The note appears on `/notes`, newest first.
+3. Run `npm run dev` or `npm run build`. The note appears on `/notes`, newest first. Its reading
+   time ("5 min read") is worked out automatically at build time, as it is for blog posts.
 
 ## Adding external writing
 

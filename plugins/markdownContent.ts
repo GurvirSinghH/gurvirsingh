@@ -8,8 +8,8 @@ import { NOTE_CATEGORIES } from "../src/data/noteCategories.ts";
  * into JavaScript modules at build time, so no Markdown parser is shipped to
  * the browser.
  *
- *   Blog post:     export default { slug, title, date, description, tags, html }
- *   Research note: export default { slug, title, date, description, category, html }
+ *   Blog post:     export default { slug, title, date, description, tags, readingMinutes, html }
+ *   Research note: export default { slug, title, date, description, category, readingMinutes, html }
  *
  * Invalid frontmatter stops the build with a message naming the file.
  */
@@ -17,6 +17,8 @@ import { NOTE_CATEGORIES } from "../src/data/noteCategories.ts";
 const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n|$)/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+/** Reading speed used for "N min read". Slower than the ~240 wpm average, for technical text. */
+const WORDS_PER_MINUTE = 200;
 
 type Data = Record<string, unknown>;
 type Fail = (message: string) => never;
@@ -118,7 +120,11 @@ export default function markdownContent(): Plugin {
         '<img loading="lazy" ',
       );
 
-      const entry = { ...fields, title, date, description, html };
+      // Count words in the rendered text, so link URLs and Markdown syntax are not counted.
+      const words = html.replace(/<[^>]+>/g, " ").match(/\S+/g)?.length ?? 0;
+      const readingMinutes = Math.max(1, Math.round(words / WORDS_PER_MINUTE));
+
+      const entry = { ...fields, title, date, description, readingMinutes, html };
       return { code: `export default ${JSON.stringify(entry)};`, map: null };
     },
   };
