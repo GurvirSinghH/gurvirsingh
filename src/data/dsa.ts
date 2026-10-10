@@ -1,7 +1,7 @@
 /**
- * DSA practice page (/dsa).
+ * DSA section of the Learning page (/learning).
  *
- * The page shows live progress from the "Tracker" tab of a Google Sheet. To connect it, put the
+ * The section shows live progress from the "Tracker" tab of a Google Sheet. To connect it, put the
  * sheet's ID in `sheetId` (the long code between /d/ and /edit in the sheet's address) and share
  * the sheet as "Anyone with the link: Viewer". The list below is the NeetCode 150 in study order;
  * it is shown when the sheet can't be read, and in the prerendered HTML before progress loads.

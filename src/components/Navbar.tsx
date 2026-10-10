@@ -10,7 +10,7 @@ const navItems = [
   { to: "/projects", label: "Projects" },
   ...(posts.length > 0 || externalWriting.length > 0 ? [{ to: "/blog", label: "Blog" }] : []),
   { to: "/notes", label: "Research Notes" },
-  { to: "/dsa", label: "DSA" },
+  { to: "/learning", label: "Learning" },
   { to: "/about", label: "About" },
   { href: site.cvUrl, label: "CV" },
 ];

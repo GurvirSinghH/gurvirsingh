@@ -120,6 +120,18 @@ function ProblemRow({ problem, showTopic = false }: { problem: DsaProblem; showT
   );
 }
 
+/** A heading inside a section, smaller than SectionHeading and without its rule. */
+function SubHeading({ id, aside, children }: { id: string; aside?: string; children: string }) {
+  return (
+    <div className="mb-1 flex items-baseline justify-between gap-4">
+      <h3 id={id} className="font-serif text-lg font-semibold text-ink">
+        {children}
+      </h3>
+      {aside && <span className="text-sm text-faint">{aside}</span>}
+    </div>
+  );
+}
+
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div>
@@ -129,7 +141,7 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
-export default function Dsa() {
+export default function Learning() {
   const [problems, setProblems] = useState<DsaProblem[]>(baselineProblems);
   const [state, setState] = useState<LoadState>(dsa.sheetId ? "loading" : "not-connected");
 
@@ -166,82 +178,88 @@ export default function Dsa() {
 
   return (
     <>
-      <PageHeader title="DSA Practice">
-        <p>
-          I am working through the{" "}
-          <a href={dsa.listUrl} className="link">
-            {dsa.listName}
-          </a>
-          , a list of {baselineProblems.length} coding problems covering the common patterns in
-          technical interviews, alongside my machine learning projects.
-          {state !== "not-connected" &&
-            " This page reads from the spreadsheet I track them in, so it is always up to date."}{" "}
-          Each solved problem has a one-line note on its key idea, in my own words.
-        </p>
+      <PageHeader title="Learning">
+        <p>Skills I am practising alongside my projects, and how far along I am.</p>
       </PageHeader>
 
-      {state !== "not-connected" && (
-        <section aria-label="Progress" aria-busy={loading} className="mb-14">
-          {state !== "unavailable" && (
-            <>
-              <p className="font-serif text-2xl text-ink">
-                <span className="font-semibold tabular-nums">{count(solved)}</span>
-                <span className="text-muted"> of {problems.length} solved</span>
-              </p>
-              <ProgressBar
-                value={loading ? 0 : solved.length / problems.length}
-                label="Problems solved"
-                className="mt-3 h-1.5"
-              />
+      <section aria-labelledby="dsa">
+        <SectionHeading
+          id="dsa"
+          aside={
+            <a href={dsa.listUrl} className="link">
+              The list<span className="sr-only"> on NeetCode</span>{" "}
+              <span aria-hidden="true">↗</span>
+            </a>
+          }
+        >
+          DSA: {dsa.listName}
+        </SectionHeading>
+        <p className="mb-8 max-w-2xl">
+          {baselineProblems.length} coding problems covering the common patterns in technical
+          interviews.
+          {state !== "not-connected" &&
+            " This section reads from the spreadsheet I track them in, so it is always up to date."}{" "}
+          Each solved problem has a one-line note on its key idea, in my own words.
+        </p>
 
-              <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
-                {byDifficulty.map(({ difficulty, all, solved: done }) => (
-                  <Stat
-                    key={difficulty}
-                    label={difficulty}
-                    value={`${count(done)} / ${all.length}`}
-                  />
-                ))}
-                <Stat label="Revisited" value={count(revisited)} />
-              </dl>
-            </>
-          )}
-
-          <p className={`text-sm text-faint ${state === "unavailable" ? "" : "mt-6"}`}>
-            Started <time dateTime={dsa.startedOn}>{formatDate(dsa.startedOn)}</time>
-            {live && lastSolved && (
+        {state !== "not-connected" && (
+          <div aria-label="DSA progress" aria-busy={loading} className="mb-12">
+            {state !== "unavailable" && (
               <>
-                {" · "}last solved <time dateTime={lastSolved}>{formatDate(lastSolved)}</time>
+                <p className="font-serif text-2xl text-ink">
+                  <span className="font-semibold tabular-nums">{count(solved)}</span>
+                  <span className="text-muted"> of {problems.length} solved</span>
+                </p>
+                <ProgressBar
+                  value={loading ? 0 : solved.length / problems.length}
+                  label="Problems solved"
+                  className="mt-3 h-1.5"
+                />
+
+                <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
+                  {byDifficulty.map(({ difficulty, all, solved: done }) => (
+                    <Stat
+                      key={difficulty}
+                      label={difficulty}
+                      value={`${count(done)} / ${all.length}`}
+                    />
+                  ))}
+                  <Stat label="Revisited" value={count(revisited)} />
+                </dl>
               </>
             )}
-          </p>
-          {state === "unavailable" && (
-            <p className="mt-3 text-sm text-muted">
-              My progress couldn't be loaded just now, so the list is shown without it.
+
+            <p className={`text-sm text-faint ${state === "unavailable" ? "" : "mt-6"}`}>
+              Started <time dateTime={dsa.startedOn}>{formatDate(dsa.startedOn)}</time>
+              {live && lastSolved && (
+                <>
+                  {" · "}last solved <time dateTime={lastSolved}>{formatDate(lastSolved)}</time>
+                </>
+              )}
             </p>
-          )}
-        </section>
-      )}
+            {state === "unavailable" && (
+              <p className="mt-3 text-sm text-muted">
+                My progress couldn't be loaded just now, so the list is shown without it.
+              </p>
+            )}
+          </div>
+        )}
 
-      {live && recent.length > 0 && (
-        <section aria-labelledby="recent" className="mb-14">
-          <SectionHeading id="recent">Recently solved</SectionHeading>
-          <ol className="divide-y divide-rule">
-            {recent.map((p) => (
-              <ProblemRow key={`${p.topic}-${p.name}`} problem={p} showTopic />
-            ))}
-          </ol>
-        </section>
-      )}
+        {live && recent.length > 0 && (
+          <div className="mb-12">
+            <SubHeading id="dsa-recent">Recently solved</SubHeading>
+            <ol aria-labelledby="dsa-recent" className="divide-y divide-rule border-t border-rule">
+              {recent.map((p) => (
+                <ProblemRow key={`${p.topic}-${p.name}`} problem={p} showTopic />
+              ))}
+            </ol>
+          </div>
+        )}
 
-      <section aria-labelledby="all-problems">
-        <SectionHeading
-          id="all-problems"
-          aside={<span className="text-faint">In study order</span>}
-        >
+        <SubHeading id="dsa-all" aside="In study order">
           All problems
-        </SectionHeading>
-        <div>
+        </SubHeading>
+        <div aria-labelledby="dsa-all" role="group" className="border-t border-rule">
           {topics.map((topic) => {
             const items = problems.filter((p) => p.topic === topic);
             const done = items.filter(isSolved).length;
