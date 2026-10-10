@@ -26,6 +26,8 @@ npm run preview   # serve the production build
 | Allowed research note categories | `src/data/noteCategories.ts` |
 | Markdown → HTML build step (blog and notes) | `plugins/markdownContent.ts` |
 | External writing (articles on other sites) | `src/data/externalWriting.ts` |
+| Learning page: DSA section (Google Sheet ID, problem list) | `src/data/dsa.ts` |
+| Learning page layout | `src/pages/Learning.tsx` |
 | Colours and fonts (each colour is a `light-dark(light, dark)` pair) | `src/index.css` (`@theme` block) |
 | Light/dark toggle (follows the system until clicked) | `src/components/ThemeToggle.tsx`, inline script in `index.html` |
 | Blog article typography | `src/index.css` (`.article` rules) |
@@ -128,6 +130,26 @@ with. They work like blog posts, with a category instead of tags.
 
 Append an entry to `externalWriting` in `src/data/externalWriting.ts` with `title`, `platform`,
 `date`, `description` and the article's real `url`.
+
+## Learning page
+
+`/learning` shows skills I am practising. Its DSA section tracks my progress through the
+NeetCode 150. It reads the **Tracker** tab of a Google Sheet
+in the browser each time the page opens, so updating the sheet updates the page; no rebuild is
+needed.
+
+1. Keep the tracker as a Google Sheet (not an .xlsx file in Drive) with a tab named `Tracker` and
+   these columns: `#`, `Topic`, `Problem`, `Difficulty`, `Link`, `Status`, `Date Solved`,
+   `Date Re-solved`, `Key idea`, `Note`. Status is `Not started`, `Attempted`, `Solved` or
+   `Re-solved`.
+2. Share it as **Anyone with the link: Viewer**. Everything in the Tracker tab becomes readable,
+   including the key-idea notes, which the page shows under each solved problem.
+3. Put the sheet's ID (the code between `/d/` and `/edit` in its address) in `sheetId` in
+   `src/data/dsa.ts`.
+
+If the sheet can't be read, the section shows the problem list without progress. While `sheetId`
+is `null`, it shows the list only. To add another skill, add a `<section>` with a `SectionHeading`
+to `src/pages/Learning.tsx`.
 
 ## Updating the CV
 

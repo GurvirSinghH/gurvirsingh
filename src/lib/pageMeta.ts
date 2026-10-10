@@ -37,6 +37,10 @@ const pages: Record<string, PageMeta> = {
   ),
   "/blog": page("Blog", "Longer pieces on things I am learning, building, and trying to understand."),
   "/notes": page("Research Notes", "Notes, experiments, and questions from things I'm learning."),
+  "/learning": page(
+    "Learning",
+    "Skills I am practising alongside my projects, starting with the NeetCode 150 coding problems.",
+  ),
   "/about": page(
     "About",
     "About Gurvir Singh: education, interests, programming languages and tools, and contact details.",
