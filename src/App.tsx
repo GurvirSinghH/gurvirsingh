@@ -4,6 +4,7 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import BlogPostPage from "./pages/BlogPost";
 import CV from "./pages/CV";
+import Dsa from "./pages/Dsa";
 import Home from "./pages/Home";
 import NotePage from "./pages/Note";
 import Notes from "./pages/Notes";
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="blog/:slug" element={<BlogPostPage />} />
         <Route path="notes" element={<Notes />} />
         <Route path="notes/:slug" element={<NotePage />} />
+        <Route path="dsa" element={<Dsa />} />
         <Route path="about" element={<About />} />
         <Route path="cv" element={<CV />} />
         {/* Contact details now live on the About page. */}
