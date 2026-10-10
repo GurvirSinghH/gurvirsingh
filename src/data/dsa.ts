@@ -24,7 +24,7 @@ export interface DsaProblem {
 
 export const dsa = {
   // Google Sheet ID, e.g. "1AbC…xyz". While null, the page shows the list without progress.
-  sheetId: null as string | null,
+  sheetId: "1dofSb9hs6jerN2briwY0TRuKz74LubQr9c-srPxxYS8" as string | null,
   // Name of the tab that holds the problems.
   sheetTab: "Tracker",
   // Day I started the list ("YYYY-MM-DD").
