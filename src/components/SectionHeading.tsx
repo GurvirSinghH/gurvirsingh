@@ -10,7 +10,7 @@ interface SectionHeadingProps {
 export default function SectionHeading({ children, id, aside }: SectionHeadingProps) {
   return (
     <div className="mb-6 flex items-baseline justify-between gap-4 border-b border-rule pb-2">
-      <h2 id={id} className="scroll-mt-6 font-serif text-xl font-semibold text-ink">
+      <h2 id={id} className="font-display text-xl font-bold tracking-tight text-ink">
         {children}
       </h2>
       {aside && <div className="text-sm">{aside}</div>}

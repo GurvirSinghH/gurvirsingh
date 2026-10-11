@@ -37,9 +37,9 @@ function ProgressBar({
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={pct}
-      className={`overflow-hidden rounded-full bg-rule ${className}`}
+      className={`overflow-hidden rounded-full border border-ink bg-page ${className}`}
     >
-      <div className="h-full rounded-full bg-accent" style={{ width: `${pct}%` }} />
+      <div className="h-full bg-accent" style={{ width: `${pct}%` }} />
     </div>
   );
 }
@@ -89,10 +89,9 @@ function StatusMark({ status }: { status: DsaStatus }) {
   );
 }
 
-function ProblemRow({ problem, showTopic = false }: { problem: DsaProblem; showTopic?: boolean }) {
+function ProblemRow({ problem }: { problem: DsaProblem }) {
   const solved = isSolved(problem);
   const meta = [
-    showTopic ? problem.topic : null,
     problem.difficulty,
     problem.solvedOn ? shortDate(problem.solvedOn) : null,
     problem.status === "Re-solved" ? "revisited" : null,
@@ -120,11 +119,50 @@ function ProblemRow({ problem, showTopic = false }: { problem: DsaProblem; showT
   );
 }
 
+const DIFFICULTY_TINTS = {
+  Easy: "bg-tint-green",
+  Medium: "bg-tint-yellow",
+  Hard: "bg-tint-red",
+} as const;
+
+/** A solved problem as a card: topic on the label strip, my note, then difficulty and date. */
+function ProblemCard({ problem }: { problem: DsaProblem }) {
+  return (
+    <li className="card card-lift">
+      <p className={`card-label text-ink ${DIFFICULTY_TINTS[problem.difficulty]}`}>
+        {problem.topic}
+      </p>
+      <div className="flex flex-1 flex-col p-4">
+        <h4 className="font-display leading-snug font-bold text-ink">
+          <a href={leetcodeUrl(problem.name)} className="stretched-link hover:text-accent">
+            {problem.name}
+            <span className="sr-only"> on LeetCode</span>
+          </a>
+        </h4>
+        {problem.note && (
+          <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted">{problem.note}</p>
+        )}
+        <p className="card-rule mt-auto flex justify-between gap-4 pt-2 text-sm">
+          <span>
+            <span className="font-semibold">{problem.difficulty}</span>
+            {problem.status === "Re-solved" && <span className="text-faint"> · revisited</span>}
+          </span>
+          {problem.solvedOn && (
+            <time dateTime={problem.solvedOn} className="text-faint tabular-nums">
+              {shortDate(problem.solvedOn)}
+            </time>
+          )}
+        </p>
+      </div>
+    </li>
+  );
+}
+
 /** A heading inside a section, smaller than SectionHeading and without its rule. */
 function SubHeading({ id, aside, children }: { id: string; aside?: string; children: string }) {
   return (
-    <div className="mb-1 flex items-baseline justify-between gap-4">
-      <h3 id={id} className="font-serif text-lg font-semibold text-ink">
+    <div className="mb-3 flex items-baseline justify-between gap-4">
+      <h3 id={id} className="font-display text-lg font-bold text-ink">
         {children}
       </h3>
       {aside && <span className="text-sm text-faint">{aside}</span>}
@@ -134,9 +172,9 @@ function SubHeading({ id, aside, children }: { id: string; aside?: string; child
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div>
-      <dt className="text-sm text-faint">{label}</dt>
-      <dd className="mt-0.5 tabular-nums">{value}</dd>
+    <div className="card px-3 py-2">
+      <dt className="font-mono text-[0.8125rem] text-faint">{label}</dt>
+      <dd className="mt-0.5 font-display text-lg font-bold tabular-nums">{value}</dd>
     </div>
   );
 }
@@ -206,17 +244,17 @@ export default function Learning() {
           <div aria-label="DSA progress" aria-busy={loading} className="mb-12">
             {state !== "unavailable" && (
               <>
-                <p className="font-serif text-2xl text-ink">
+                <p className="font-display text-2xl tracking-tight text-ink">
                   <span className="font-semibold tabular-nums">{count(solved)}</span>
                   <span className="text-muted"> of {problems.length} solved</span>
                 </p>
                 <ProgressBar
                   value={loading ? 0 : solved.length / problems.length}
                   label="Problems solved"
-                  className="mt-3 h-1.5"
+                  className="mt-3 h-3"
                 />
 
-                <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
+                <dl className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {byDifficulty.map(({ difficulty, all, solved: done }) => (
                     <Stat
                       key={difficulty}
@@ -248,9 +286,9 @@ export default function Learning() {
         {live && recent.length > 0 && (
           <div className="mb-12">
             <SubHeading id="dsa-recent">Recently solved</SubHeading>
-            <ol aria-labelledby="dsa-recent" className="divide-y divide-rule border-t border-rule">
+            <ol aria-labelledby="dsa-recent" className="card-grid">
               {recent.map((p) => (
-                <ProblemRow key={`${p.topic}-${p.name}`} problem={p} showTopic />
+                <ProblemCard key={`${p.topic}-${p.name}`} problem={p} />
               ))}
             </ol>
           </div>
@@ -259,12 +297,12 @@ export default function Learning() {
         <SubHeading id="dsa-all" aside="In study order">
           All problems
         </SubHeading>
-        <div aria-labelledby="dsa-all" role="group" className="border-t border-rule">
+        <div aria-labelledby="dsa-all" role="group" className="card">
           {topics.map((topic) => {
             const items = problems.filter((p) => p.topic === topic);
             const done = items.filter(isSolved).length;
             return (
-              <details key={topic} className="group border-b border-rule">
+              <details key={topic} className="group card-rule px-4 first:border-t-0">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-3 hover:text-accent [&::-webkit-details-marker]:hidden">
                   <span className="flex items-center gap-2.5">
                     <svg
@@ -276,7 +314,7 @@ export default function Learning() {
                     >
                       <path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.5" />
                     </svg>
-                    <span className="font-serif font-semibold">{topic}</span>
+                    <span className="font-display font-bold">{topic}</span>
                   </span>
                   <span className="flex items-center gap-3 text-sm text-faint">
                     {live && (

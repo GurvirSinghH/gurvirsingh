@@ -9,16 +9,24 @@
 @theme {
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  --font-display: var(--font-sans); /* page titles, headings, card titles, navbar name */
   --font-mono: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas, Menlo, monospace;
 
-  --color-page: light-dark(#ffffff, #151515); /* page background */
-  --color-ink: light-dark(#1c1c1c, #e6e6e3); /* body text */
-  --color-muted: light-dark(#4f4f4f, #b5b5b0); /* secondary text */
-  --color-faint: light-dark(#6b6b6b, #8f8f8a); /* labels, footer */
-  --color-rule: light-dark(#e2e2e2, #2e2e2c); /* borders and dividers */
-  --color-wash: light-dark(#f7f7f5, #1e1e1d); /* subtle background for callouts */
-  --color-accent: light-dark(#1b4f8a, #8db8ec); /* links */
-  --color-accent-hover: light-dark(#123a66, #b8d3f5); /* link hover */
+  --color-page: light-dark(#ffffff, #14151a); /* page background */
+  --color-ink: light-dark(#141a33, #e8e8e4); /* body text, card borders and card shadows */
+  --color-muted: light-dark(#474c60, #b7b8b4); /* secondary text */
+  --color-faint: light-dark(#5f6479, #92938f); /* labels, footer */
+  --color-rule: light-dark(#dcdee6, #2f3036); /* borders and dividers */
+  --color-wash: light-dark(#f4f6fb, #1c1d23); /* subtle background for callouts */
+  --color-accent: light-dark(#2347d6, #9db4ff); /* links, navbar hover, CV button */
+  --color-accent-hover: light-dark(#1a36a8, #c3d1ff); /* link hover */
+  --color-on-accent: light-dark(#ffffff, #10131f); /* text on the CV button */
+
+  /* Card label strips (the coloured band at the top of a card). */
+  --color-tint-blue: light-dark(#e3eaff, #1f2847);
+  --color-tint-green: light-dark(#e3f6d3, #20301b);
+  --color-tint-yellow: light-dark(#fff1bf, #3a3216);
+  --color-tint-red: light-dark(#ffe0da, #3e2320);
 }
 
 /*
@@ -40,6 +48,8 @@
 @layer base {
   html {
     color-scheme: light dark;
+    /* Keep in-page #anchor targets clear of the sticky navbar. */
+    scroll-padding-top: 5rem;
     background-color: var(--color-page);
     color: var(--color-ink);
     -webkit-text-size-adjust: 100%;
@@ -79,6 +89,115 @@
   }
 }
 
+/*
+ * Cards: a thin dark border, square-ish corners and an optional label strip on top.
+ * `card-lift` adds the hover effect: the card moves up and right and a solid shadow
+ * appears behind it (also on keyboard focus). With reduced motion it only shows the shadow.
+ */
+@utility card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--color-ink);
+  border-radius: 4px;
+  background-color: var(--color-page);
+}
+
+@utility card-lift {
+  transition:
+    transform 150ms ease-in,
+    box-shadow 150ms ease-in;
+
+  &:hover,
+  &:focus-within {
+    transform: translate(4px, -4px);
+    box-shadow: -8px 8px 0 var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover,
+    &:focus-within {
+      transform: none;
+    }
+  }
+}
+
+/* The label strip at the top of a card. Pair with a background, e.g. `bg-tint-blue`. */
+@utility card-label {
+  border-bottom: 1px solid var(--color-ink);
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* Dotted divider between the rows at the bottom of a card. */
+@utility card-rule {
+  border-top: 1px dotted color-mix(in srgb, var(--color-ink) 55%, transparent);
+}
+
+/* Makes a link cover its whole card, so the card is clickable. Other links in the card
+   need `relative z-10` to stay clickable above it. */
+@utility stretched-link {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+/* Two cards per row from 640px up; an odd card at the end spans the whole row. */
+@utility card-grid {
+  display: grid;
+  gap: 1.5rem;
+
+  @media (min-width: 40rem) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    & > :last-child:nth-child(odd) {
+      grid-column: span 2;
+    }
+  }
+}
+
+/* Buttons: outlined (`btn`) and filled with the accent colour (`btn btn-primary`). */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border: 2px solid var(--color-ink);
+  border-radius: 4px;
+  padding: 0.25rem 1rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  white-space: nowrap;
+  color: var(--color-ink);
+  transition:
+    background-color 150ms ease-in,
+    color 150ms ease-in;
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--color-ink) 12%, transparent);
+  }
+}
+
+@utility btn-primary {
+  border-color: transparent;
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+
+  &:hover {
+    background-color: var(--color-accent-hover);
+  }
+}
+
 /* Centered content column shared by header, main and footer. */
 @utility container-page {
   margin-inline: auto;
@@ -111,17 +230,17 @@
   /* A "# Heading" inside a post or note: one step above "##". */
   .article h1 {
     margin-top: 2.25em;
-    font-family: var(--font-serif);
+    font-family: var(--font-display);
     font-size: 1.625rem;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.25;
   }
 
   .article h2 {
     margin-top: 2.25em;
-    font-family: var(--font-serif);
+    font-family: var(--font-display);
     font-size: 1.375rem;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.3;
   }
 

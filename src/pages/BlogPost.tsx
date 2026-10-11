@@ -12,7 +12,7 @@ export default function BlogPostPage() {
   return (
     <article>
       <header className="max-w-2xl">
-        <h1 className="font-serif text-3xl font-semibold leading-tight text-ink sm:text-4xl">
+        <h1 className="font-display text-3xl font-bold tracking-tight leading-tight text-ink sm:text-4xl">
           {post.title}
         </h1>
         <p className="mt-3 text-sm text-faint">
