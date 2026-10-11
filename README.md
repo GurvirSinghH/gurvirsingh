@@ -29,7 +29,7 @@ npm run preview   # serve the production build
 | Learning page: DSA section (Google Sheet ID, problem list) | `src/data/dsa.ts` |
 | Learning page layout | `src/pages/Learning.tsx` |
 | Colours and fonts (each colour is a `light-dark(light, dark)` pair) | `src/index.css` (`@theme` block) |
-| Light/dark toggle (follows the system until clicked) | `src/components/ThemeToggle.tsx`, inline script in `index.html` |
+| Light/dark toggle (light by default; dark only when picked with the toggle) | `src/components/ThemeToggle.tsx`, inline script in `index.html` |
 | Blog article typography | `src/index.css` (`.article` rules) |
 | Cards, their hover effect, and buttons | `src/index.css` (`card`, `card-lift`, `card-label`, `card-grid`, `btn`, `btn-primary`) |
 | Page titles and descriptions (tab title, link previews) | `src/lib/pageMeta.ts` |

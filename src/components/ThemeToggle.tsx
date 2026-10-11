@@ -1,10 +1,9 @@
 /**
  * Light/dark mode button.
  *
- * The site follows the system setting until this button is used. The choice is then
- * stored and set as data-theme="light" or "dark" on <html>; the inline script in
- * index.html applies a stored choice before the page is drawn. Choosing the system's
- * own theme again clears the stored choice, so the site follows the system again.
+ * The site is light by default, whatever the system setting. This button turns dark mode
+ * on (data-theme="dark" on <html>, remembered in localStorage) and off again; the inline
+ * script in index.html applies a remembered choice before the page is drawn.
  *
  * The icon is picked with CSS (the `dark:` variant in index.css) rather than React
  * state, so the prerendered HTML already shows the right one.
@@ -15,18 +14,13 @@ const STORAGE_KEY = "theme";
 
 function toggleTheme() {
   const root = document.documentElement;
-  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const isDark = root.dataset.theme ? root.dataset.theme === "dark" : systemDark;
-  const next = isDark ? "light" : "dark";
+  const turnDarkOn = root.dataset.theme !== "dark";
 
-  if ((next === "dark") === systemDark) {
-    delete root.dataset.theme;
-  } else {
-    root.dataset.theme = next;
-  }
+  if (turnDarkOn) root.dataset.theme = "dark";
+  else delete root.dataset.theme;
 
   try {
-    if (root.dataset.theme) localStorage.setItem(STORAGE_KEY, next);
+    if (turnDarkOn) localStorage.setItem(STORAGE_KEY, "dark");
     else localStorage.removeItem(STORAGE_KEY);
   } catch {
     // Storage can be blocked; the choice then lasts until the page is reloaded.
