@@ -11,8 +11,7 @@ interface LinkButtonProps {
   download?: boolean;
 }
 
-const style =
-  "inline-flex items-center gap-1 rounded-sm border border-rule px-2.5 py-1 text-sm leading-6 whitespace-nowrap text-accent hover:border-accent hover:text-accent-hover";
+const style = "btn text-sm";
 
 export default function LinkButton({ href, children, context, download }: LinkButtonProps) {
   const srContext = context ? <span className="sr-only"> — {context}</span> : null;

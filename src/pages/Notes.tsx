@@ -28,20 +28,27 @@ export default function Notes() {
             className={i > 0 ? "mt-12" : undefined}
           >
             <SectionHeading id={section.id}>{section.category}</SectionHeading>
-            <ol className="divide-y divide-rule">
+            <ol className="card-grid">
               {section.items.map((note) => (
-                <li key={note.slug} className="py-5 first:pt-0 last:pb-0">
-                  <h3 className="font-serif text-lg font-semibold leading-snug text-ink">
-                    <Link to={`/notes/${note.slug}`} className="hover:text-accent hover:underline">
-                      {note.title}
-                    </Link>
-                  </h3>
-                  <p className="mt-0.5 text-sm text-faint">
-                    <time dateTime={note.date}>{formatDate(note.date)}</time>
-                    {" · "}
-                    {note.readingMinutes} min read
-                  </p>
-                  {note.description && <p className="mt-1.5">{note.description}</p>}
+                <li key={note.slug} className="card card-lift">
+                  <p className="card-label bg-tint-green text-ink">Research note</p>
+                  <div className="flex flex-1 flex-col p-4">
+                    <h3 className="font-display text-lg leading-snug font-bold text-ink">
+                      <Link to={`/notes/${note.slug}`} className="stretched-link hover:text-accent">
+                        {note.title}
+                      </Link>
+                    </h3>
+                    {note.description && (
+                      <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">
+                        {note.description}
+                      </p>
+                    )}
+                    <p className="card-rule mt-auto pt-2 text-sm text-faint">
+                      <time dateTime={note.date}>{formatDate(note.date)}</time>
+                      {" · "}
+                      {note.readingMinutes} min read
+                    </p>
+                  </div>
                 </li>
               ))}
             </ol>

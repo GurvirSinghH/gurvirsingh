@@ -19,7 +19,7 @@ export default function Blog() {
         {posts.length > 0 ? (
           <PostList posts={posts} />
         ) : (
-          <p className="border-t border-rule pt-6 text-muted">No posts yet.</p>
+          <p className="text-muted">No posts yet.</p>
         )}
       </section>
 

@@ -50,7 +50,7 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
     <button
       type="button"
       onClick={toggleTheme}
-      className={`p-2 text-muted hover:text-accent ${className}`}
+      className={`p-2 text-ink transition-colors duration-150 hover:text-accent ${className}`}
     >
       <span className="block dark:hidden">
         <svg {...iconProps}>

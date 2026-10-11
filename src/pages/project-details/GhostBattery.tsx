@@ -90,7 +90,7 @@ export default function GhostBattery() {
       </p>
 
       <header className="mt-6">
-        <h1 className="font-serif text-3xl font-semibold text-ink sm:text-4xl">{project.title}</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">{project.title}</h1>
         <p className="mt-2 text-lg text-muted italic">{project.subtitle}</p>
 
         <dl className="mt-6 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
@@ -122,7 +122,7 @@ export default function GhostBattery() {
       </header>
 
       <nav aria-labelledby="contents" className="mt-10 border-y border-rule py-4 text-sm">
-        <h2 id="contents" className="font-serif text-xl font-semibold text-ink">
+        <h2 id="contents" className="font-display text-xl font-bold tracking-tight text-ink">
           Contents
         </h2>
         <ol className="mt-2 grid grid-cols-1 gap-x-6 gap-y-1 min-[400px]:grid-cols-2 sm:grid-cols-3">

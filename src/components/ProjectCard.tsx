@@ -1,26 +1,47 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router";
-import type { Project } from "../data/projects";
+import type { Project, ProjectSection } from "../data/projects";
 import Separated from "./Separated";
 
 /**
  * How a project is shown:
- *   full     title, status, full description, screenshot, technologies, links (Selected work)
+ *   full     full description, screenshot, technologies, status, links (Selected work)
  *   summary  same, but only the first sentence of the description and no screenshot (Home)
- *   compact  like summary, with a smaller title (Other projects)
- *   idea     status directly under the title, then subtitle and description (Exploration)
+ *   compact  like summary (Other projects)
+ *   idea     subtitle, full description, status, links (Exploration)
+ *
+ * Every project is a card. The label strip at the top says what kind of project it is,
+ * and the whole card links to the project's details page or, if it has none, its code.
  */
 export type ProjectCardVariant = "full" | "summary" | "compact" | "idea";
+
+const LABELS: Record<ProjectSection, { text: string; className: string }> = {
+  selected: { text: "Featured project", className: "bg-ink text-page" },
+  other: { text: "Project", className: "bg-tint-blue text-ink" },
+  exploration: { text: "Idea", className: "bg-tint-yellow text-ink" },
+};
 
 /** "First sentence. Second sentence." → "First sentence." */
 function firstSentence(text: string): string {
   return text.match(/^.+?[.!?](?=\s|$)/)?.[0] ?? text;
 }
 
+/** Where a click on the card goes: the details page, else the code, demo or video. */
+function mainLink(project: Project): string | undefined {
+  return project.details ?? project.github ?? project.demo ?? project.video;
+}
+
 function ProjectLinks({ project }: { project: Project }) {
   const { title, github, demo, video, details } = project;
   const links: ReactNode[] = [];
 
+  if (details) {
+    links.push(
+      <Link key="details" to={details} className="link">
+        Details<span className="sr-only">: {title}</span> <span aria-hidden="true">→</span>
+      </Link>,
+    );
+  }
   if (github) {
     links.push(
       <a key="code" href={github} className="link">
@@ -42,16 +63,29 @@ function ProjectLinks({ project }: { project: Project }) {
       </a>,
     );
   }
-  if (details) {
-    links.push(
-      <Link key="details" to={details} className="link">
-        Details<span className="sr-only">: {title}</span> <span aria-hidden="true">→</span>
-      </Link>,
-    );
-  }
 
   if (links.length === 0) return null;
-  return <p className="flex flex-wrap gap-x-4">{links}</p>;
+  // `relative z-10` keeps these clickable above the card-wide link.
+  return <p className="card-rule relative z-10 flex flex-wrap gap-x-4 pt-2">{links}</p>;
+}
+
+function CardTitle({ project }: { project: Project }) {
+  const href = mainLink(project);
+  const className = "stretched-link hover:text-accent";
+
+  if (!href) return <>{project.title}</>;
+  if (href.startsWith("/")) {
+    return (
+      <Link to={href} className={className}>
+        {project.title}
+      </Link>
+    );
+  }
+  return (
+    <a href={href} className={className}>
+      {project.title}
+    </a>
+  );
 }
 
 export default function ProjectCard({
@@ -61,58 +95,52 @@ export default function ProjectCard({
   project: Project;
   variant?: ProjectCardVariant;
 }) {
-  const { title, subtitle, description, technologies, status } = project;
-
-  if (variant === "idea") {
-    return (
-      <li className="py-5 first:pt-0 last:pb-0">
-        <h3 className="font-serif text-lg font-semibold leading-snug text-ink">{title}</h3>
-        <p className="mt-0.5 text-[0.9375rem] text-muted">{status}</p>
-        {subtitle && <p className="mt-2 text-muted italic">{subtitle}</p>}
-        <p className="mt-1.5">{description}</p>
-        <div className="mt-2 text-sm">
-          <ProjectLinks project={project} />
-        </div>
-      </li>
-    );
-  }
-
-  const short = variant !== "full";
+  const { subtitle, description, technologies, status, section } = project;
+  const label = LABELS[section];
+  const short = variant === "summary" || variant === "compact";
 
   return (
-    <li className={short ? "py-4 first:pt-0 last:pb-0" : "py-5 first:pt-0 last:pb-0"}>
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
-        <h3
-          className={`font-serif font-semibold leading-snug text-ink ${variant === "compact" ? "text-base" : "text-lg"}`}
-        >
-          {title}
+    <li className={`card ${mainLink(project) ? "card-lift" : ""}`}>
+      <p className={`card-label ${label.className}`}>{label.text}</p>
+
+      <div className="flex flex-1 flex-col p-4">
+        <h3 className="font-display text-lg leading-snug font-bold text-ink">
+          <CardTitle project={project} />
         </h3>
-        <p className="text-sm text-faint">{status}</p>
-      </div>
-      <p className={short ? "mt-1" : "mt-1.5"}>{short ? firstSentence(description) : description}</p>
-      {!short && project.image && (
-        <img
-          src={project.image.src}
-          alt={project.image.alt}
-          loading="lazy"
-          className="mt-3 w-full border border-rule"
-        />
-      )}
-      <div
-        className={`flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm ${short ? "mt-1" : "mt-2"}`}
-      >
-        {technologies.length > 0 && (
-          <p className="text-muted">
-            <Separated items={technologies} />
-          </p>
+        {variant === "idea" && subtitle && <p className="mt-1 text-muted italic">{subtitle}</p>}
+        <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">
+          {short ? firstSentence(description) : description}
+        </p>
+        {variant === "full" && project.image && (
+          <img
+            src={project.image.src}
+            alt={project.image.alt}
+            loading="lazy"
+            className="mt-4 w-full border border-rule"
+          />
         )}
-        <ProjectLinks project={project} />
+
+        <div className="mt-auto pt-4 text-sm">
+          {technologies.length > 0 && (
+            <p className="card-rule py-2 text-muted">
+              <Separated items={technologies} />
+            </p>
+          )}
+          <p className="card-rule py-2">
+            <span className="text-faint">Status:</span>{" "}
+            <span className="font-semibold">{status}</span>
+          </p>
+          <ProjectLinks project={project} />
+        </div>
       </div>
     </li>
   );
 }
 
-/** Projects as a list separated by thin rules. */
+/**
+ * Projects as cards: two per row for the short variants, one per row for the full and
+ * idea variants, which have longer text.
+ */
 export function ProjectList({
   projects,
   variant = "full",
@@ -120,8 +148,9 @@ export function ProjectList({
   projects: Project[];
   variant?: ProjectCardVariant;
 }) {
+  const twoUp = variant === "summary" || variant === "compact";
   return (
-    <ul className="divide-y divide-rule">
+    <ul className={twoUp ? "card-grid" : "grid gap-6"}>
       {projects.map((project) => (
         <ProjectCard key={project.slug} project={project} variant={variant} />
       ))}

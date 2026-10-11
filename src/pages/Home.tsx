@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <>
       <section aria-labelledby="intro">
-        <h1 id="intro" className="font-serif text-3xl font-semibold text-ink sm:text-4xl">
+        <h1 id="intro" className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
           {site.name}
         </h1>
         <p className="mt-2 text-muted">
