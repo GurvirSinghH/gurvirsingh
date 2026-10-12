@@ -36,6 +36,7 @@ npm run preview   # serve the production build
 | Site URL (canonical, Open Graph, sitemap) | `url` in `src/data/site.ts` |
 | Link-preview image (1200×630) | `public/og-image.png` |
 | Prerendering, sitemap.xml, robots.txt | `scripts/prerender.mjs` |
+| Visitor analytics (Vercel Web Analytics; view it in the Vercel dashboard under Analytics) | `<Analytics />` in `src/components/Layout.tsx` |
 
 Reusable components are in `src/components/`: `Navbar`, `Footer`, `ProjectCard`, `PostCard`,
 `ExternalArticleCard`, `SectionHeading`, `LinkButton`, `PageHeader`, `Separated`, `ThemeToggle`.

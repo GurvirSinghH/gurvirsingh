@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
 import { pageMeta } from "../lib/pageMeta";
@@ -27,6 +28,9 @@ export default function Layout() {
         <Outlet />
       </main>
       <Footer />
+      {/* Vercel Web Analytics: counts page views, including moving between pages. No cookies.
+          Turned on for the project in the Vercel dashboard (Analytics → Enable). */}
+      <Analytics />
     </div>
   );
 }
