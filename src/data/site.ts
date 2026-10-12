@@ -7,7 +7,7 @@ export const site = {
 
   // Address of the live site, without a trailing slash. Used for canonical URLs,
   // Open Graph tags and the sitemap.
-  url: "https://gurvir-singh-website.vercel.app",
+  url: "https://gurvirsingh.in",
 
   github: "https://github.com/GurvirSinghH",
 
