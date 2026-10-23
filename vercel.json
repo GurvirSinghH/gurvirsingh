@@ -1,4 +1,8 @@
 {
   "cleanUrls": true,
-  "redirects": [{ "source": "/contact", "destination": "/about", "permanent": true }]
+  "redirects": [
+    { "source": "/contact", "destination": "/about", "permanent": true },
+    { "source": "/notes", "destination": "/learning", "permanent": false },
+    { "source": "/notes/:slug*", "destination": "/learning", "permanent": false }
+  ]
 }

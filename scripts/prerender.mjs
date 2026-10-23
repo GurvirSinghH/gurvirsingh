@@ -7,7 +7,7 @@
  *
  *   /                 → dist/index.html
  *   /projects         → dist/projects.html        (served as /projects; see vercel.json)
- *   /notes/<slug>     → dist/notes/<slug>.html
+ *   /projects/<slug>  → dist/projects/<slug>.html
  *   unknown paths     → dist/404.html
  *
  * Also writes dist/sitemap.xml and dist/robots.txt.

@@ -10,7 +10,6 @@ import ThemeToggle from "./ThemeToggle";
 const navItems = [
   { to: "/projects", label: "Projects" },
   ...(posts.length > 0 || externalWriting.length > 0 ? [{ to: "/blog", label: "Blog" }] : []),
-  { to: "/notes", label: "Notes" },
   { to: "/learning", label: "Learning" },
   { to: "/about", label: "About" },
 ];

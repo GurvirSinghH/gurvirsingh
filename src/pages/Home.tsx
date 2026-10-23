@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router";
 import { getProject, type Project } from "../data/projects";
+import { learning } from "../data/learning";
 import { site } from "../data/site";
 import { startHome } from "../lib/homeEffects";
 import "./home.css";
@@ -68,17 +69,6 @@ const DISCIPLINES = [
   { name: "LLM tooling", where: "Neural Forge" },
   { name: "Data collection", where: "College Knowledge Base Crawler" },
   { name: "Physics-informed ML", where: "Ghost Battery" },
-];
-
-const LEARNING = [
-  {
-    topic: "Machine learning",
-    note: "Strengthening the fundamentals so I can apply ML to problems in different fields.",
-  },
-  {
-    topic: "Physics-informed ML",
-    note: "How machine learning can be combined with physical knowledge and mathematical models, so a model respects the physics even where data runs out.",
-  },
 ];
 
 function ProjectLink({ project }: { project: Project }) {
@@ -254,7 +244,7 @@ export default function Home() {
               Currently learning
             </h2>
             <ul className="hm-learn">
-              {LEARNING.map((item) => (
+              {learning.map((item) => (
                 <li key={item.topic}>
                   <h3>{item.topic}</h3>
                   <p>{item.note}</p>

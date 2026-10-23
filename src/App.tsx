@@ -6,8 +6,6 @@ import BlogPostPage from "./pages/BlogPost";
 import CV from "./pages/CV";
 import Learning from "./pages/Learning";
 import Home from "./pages/Home";
-import NotePage from "./pages/Note";
-import Notes from "./pages/Notes";
 import NotFound from "./pages/NotFound";
 import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/project-details";
@@ -21,8 +19,6 @@ export default function App() {
         <Route path="projects/:slug" element={<ProjectDetails />} />
         <Route path="blog" element={<Blog />} />
         <Route path="blog/:slug" element={<BlogPostPage />} />
-        <Route path="notes" element={<Notes />} />
-        <Route path="notes/:slug" element={<NotePage />} />
         <Route path="learning" element={<Learning />} />
         <Route path="about" element={<About />} />
         <Route path="cv" element={<CV />} />
