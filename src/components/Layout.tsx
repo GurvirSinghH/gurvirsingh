@@ -23,7 +23,8 @@ export default function Layout() {
         Skip to content
       </a>
       <Navbar />
-      <main id="main" className="container-page flex-1 pt-12 sm:pt-16">
+      {/* The home page lays out its own full-width bands; every other page uses the column. */}
+      <main id="main" className={pathname === "/" ? "flex-1" : "container-page flex-1 pt-14 sm:pt-20"}>
         <Outlet />
       </main>
       <Footer />

@@ -7,7 +7,7 @@ export default function ExternalArticleCard({ article }: { article: ExternalArti
     <li className="card card-lift">
       <p className="card-label bg-tint-blue text-ink">{article.platform}</p>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="font-display text-lg leading-snug font-bold text-ink">
+        <h3 className="font-display text-[1.75rem] leading-[0.95] font-bold text-ink">
           <a href={article.url} className="stretched-link hover:text-accent">
             {article.title}
             <span className="sr-only"> (on {article.platform})</span>

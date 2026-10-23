@@ -11,8 +11,8 @@ export default function BlogPostPage() {
 
   return (
     <article>
-      <header className="max-w-2xl">
-        <h1 className="font-display text-3xl font-bold tracking-tight leading-tight text-ink sm:text-4xl">
+      <header className="max-w-5xl">
+        <h1 className="font-display text-[clamp(2.2rem,5vw,4.5rem)] leading-[0.9] font-extrabold text-ink">
           {post.title}
         </h1>
         <p className="mt-3 text-sm text-faint">
@@ -21,7 +21,7 @@ export default function BlogPostPage() {
           {post.readingMinutes} min read
         </p>
         {post.description && (
-          <p className="mt-4 text-lg leading-relaxed text-muted">{post.description}</p>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">{post.description}</p>
         )}
       </header>
 

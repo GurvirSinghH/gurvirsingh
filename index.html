@@ -4,16 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Gurvir Singh" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0a0a0a" />
     <script>
-      // The site is light by default. Apply dark mode, if it was picked with the navbar
-      // toggle, before the page is drawn, so there is no flash of light mode first
+      // The site is dark (black) by default. Apply light mode, if it was picked with the
+      // navbar toggle, before the page is drawn, so there is no flash of the wrong theme
       // (see src/components/ThemeToggle.tsx).
       try {
-        if (localStorage.getItem("theme") === "dark") document.documentElement.dataset.theme = "dark";
-      } catch (e) {}
+        document.documentElement.dataset.theme =
+          localStorage.getItem("theme") === "light" ? "light" : "dark";
+      } catch (e) {
+        document.documentElement.dataset.theme = "dark";
+      }
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap"
+    />
 
     <!--page-meta:start-->
     <!-- Replaced per page by scripts/prerender.mjs with the title, description, canonical

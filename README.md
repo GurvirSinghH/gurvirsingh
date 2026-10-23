@@ -22,14 +22,17 @@ npm run preview   # serve the production build
 | Ghost Battery idea page | `src/pages/project-details/GhostBattery.tsx` |
 | Blog posts (Markdown) | `src/content/blog/*.md` |
 | Images used in blog posts | `public/images/blog/` |
-| Research notes (Markdown) | `src/content/notes/*.md` |
+| Research notes (Markdown; not shown on the site yet, see below) | `src/content/notes/*.md` |
 | Allowed research note categories | `src/data/noteCategories.ts` |
 | Markdown → HTML build step (blog and notes) | `plugins/markdownContent.ts` |
 | External writing (articles on other sites) | `src/data/externalWriting.ts` |
-| Learning page: DSA section (Google Sheet ID, problem list) | `src/data/dsa.ts` |
+| What I am learning (Learning page and home page) | `src/data/learning.ts` |
 | Learning page layout | `src/pages/Learning.tsx` |
-| Colours and fonts (each colour is a `light-dark(light, dark)` pair) | `src/index.css` (`@theme` block) |
-| Light/dark toggle (light by default; dark only when picked with the toggle) | `src/components/ThemeToggle.tsx`, inline script in `index.html` |
+| Colours and fonts (each colour is a `light-dark(light, dark)` pair; fonts load from Google Fonts in `index.html`) | `src/index.css` (`@theme` block) |
+| Light/dark toggle (dark by default; light only when picked with the toggle) | `src/components/ThemeToggle.tsx`, inline script in `index.html` |
+| Home page: text, project reel (order, short text, badges, pictures) | `src/pages/Home.tsx` |
+| Home page styles (all scoped to `.home`) | `src/pages/home.css` |
+| Home page animations, reel controls, IST clock, copy-email button | `src/lib/homeEffects.ts` |
 | Blog article typography | `src/index.css` (`.article` rules) |
 | Cards, their hover effect, and buttons | `src/index.css` (`card`, `card-lift`, `card-label`, `card-grid`, `btn`, `btn-primary`) |
 | Page titles and descriptions (tab title, link previews) | `src/lib/pageMeta.ts` |
@@ -57,7 +60,8 @@ Append an object to `projects` in `src/data/projects.ts`. Only set `github` / `d
 when they really exist; the card shows a link only for fields that are set. Leave
 `technologies` empty to hide the Technology row (e.g. for an idea). Set `section` to `"selected"`
 (Selected Work), `"other"` (Other Projects) or `"exploration"` (ideas); projects appear in each
-section in the order they are listed. The home page shows the `"selected"` projects.
+section in the order they are listed. To show a project in the home page's sideways reel,
+also add it to `REEL` in `src/pages/Home.tsx` with a short blurb, a status badge and a picture.
 
 For a details page: create a component in `src/pages/project-details/`, register it in
 `src/pages/project-details/index.tsx`, and set `details: "/projects/<slug>"` on the project.
@@ -100,6 +104,14 @@ With no Markdown files in `src/content/blog/`, the Blog page shows "No posts yet
 
 ## Writing a research note
 
+Research notes are switched off for now: there is no Notes page or `/notes` route, and
+`vercel.json` temporarily sends `/notes` links to `/learning`. The note files, the loader in
+`src/lib/notes.ts` and the Markdown build step are kept, so a Notes page can be added later.
+To bring them back, add a page that lists `notes` from `src/lib/notes.ts` and one that shows a
+single note, register both routes in `src/App.tsx`, add their paths to `src/lib/pageMeta.ts`
+and the navbar, and remove the two `/notes` redirects from `vercel.json`. (The previous pages
+are in the git history as `src/pages/Notes.tsx` and `src/pages/Note.tsx`.)
+
 Research notes are for things you are actively trying to understand, investigate or experiment
 with. They work like blog posts, with a category instead of tags.
 
@@ -124,8 +136,8 @@ with. They work like blog posts, with a category instead of tags.
    - `description` is optional. An optional `slug` overrides the file name in the URL.
    - As with blog posts, a `# ` line at the very top of the body is removed only if it repeats
      the title; other `#`, `##` and `###` headings are shown as headings.
-3. Run `npm run dev` or `npm run build`. The note appears on `/notes`, newest first. Its reading
-   time ("5 min read") is worked out automatically at build time, as it is for blog posts.
+3. Once a Notes page exists, the note appears there, newest first. Its reading time
+   ("5 min read") is worked out automatically at build time, as it is for blog posts.
 
 ## Adding external writing
 
@@ -134,23 +146,8 @@ Append an entry to `externalWriting` in `src/data/externalWriting.ts` with `titl
 
 ## Learning page
 
-`/learning` shows skills I am practising. Its DSA section tracks my progress through the
-NeetCode 150. It reads the **Tracker** tab of a Google Sheet
-in the browser each time the page opens, so updating the sheet updates the page; no rebuild is
-needed.
-
-1. Keep the tracker as a Google Sheet (not an .xlsx file in Drive) with a tab named `Tracker` and
-   these columns: `#`, `Topic`, `Problem`, `Difficulty`, `Link`, `Status`, `Date Solved`,
-   `Date Re-solved`, `Key idea`, `Note`. Status is `Not started`, `Attempted`, `Solved` or
-   `Re-solved`.
-2. Share it as **Anyone with the link: Viewer**. Everything in the Tracker tab becomes readable,
-   including the key-idea notes, which the page shows under each solved problem.
-3. Put the sheet's ID (the code between `/d/` and `/edit` in its address) in `sheetId` in
-   `src/data/dsa.ts`.
-
-If the sheet can't be read, the section shows the problem list without progress. While `sheetId`
-is `null`, it shows the list only. To add another skill, add a `<section>` with a `SectionHeading`
-to `src/pages/Learning.tsx`.
+`/learning` lists what I am learning right now. The topics and their one-line descriptions are in
+`src/data/learning.ts`; the same list appears in the "Currently learning" section of the home page.
 
 ## Updating the CV
 
@@ -169,9 +166,10 @@ Links to the CV use `cvUrl` in `src/data/site.ts`. `cv/build/` is not committed.
 ## Deploying
 
 `npm run build` prerenders every page to static HTML (`dist/index.html`, `dist/projects.html`,
-`dist/notes/<slug>.html`, …) with its own title, description, canonical URL and Open Graph tags,
+`dist/projects/<slug>.html`, …) with its own title, description, canonical URL and Open Graph tags,
 plus `dist/404.html`, `dist/sitemap.xml` and `dist/robots.txt`. React then takes over in the
-browser. New notes, posts and details pages are picked up automatically from `src/lib/pageMeta.ts`.
+browser. New posts and details pages are picked up automatically from `src/lib/pageMeta.ts`.
 
 The site is deployed on Vercel. `vercel.json` sets `cleanUrls` so `/projects` serves
-`projects.html`, and redirects the old `/contact` page to `/about`. Unknown paths get `404.html`.
+`projects.html`, redirects the old `/contact` page to `/about`, and for now sends `/notes` links to
+`/learning`. Unknown paths get `404.html`.

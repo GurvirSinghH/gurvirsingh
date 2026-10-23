@@ -7,7 +7,6 @@ import { externalWriting } from "../data/externalWriting";
 import { projects } from "../data/projects";
 import { site } from "../data/site";
 import { posts } from "./blog";
-import { notes } from "./notes";
 
 export interface PageMeta {
   title: string;
@@ -36,10 +35,9 @@ const pages: Record<string, PageMeta> = {
     "Projects I have built or am working on, and ideas I am exploring.",
   ),
   "/blog": page("Blog", "Longer pieces on things I am learning, building, and trying to understand."),
-  "/notes": page("Research Notes", "Notes, experiments, and questions from things I'm learning."),
   "/learning": page(
     "Learning",
-    "Skills I am practising alongside my projects, starting with the NeetCode 150 coding problems.",
+    "What I am learning right now: machine learning and physics-informed machine learning.",
   ),
   "/about": page(
     "About",
@@ -56,11 +54,8 @@ for (const project of projects) {
 for (const post of posts) {
   pages[`/blog/${post.slug}`] = page(post.title, post.description || DEFAULT.description);
 }
-for (const note of notes) {
-  pages[`/notes/${note.slug}`] = page(note.title, note.description || DEFAULT.description);
-}
 
-/** Meta for a path such as "/notes/what-is-piml"; unknown paths get the "not found" meta. */
+/** Meta for a path such as "/projects/ghost-battery"; unknown paths get the "not found" meta. */
 export function pageMeta(path: string): PageMeta {
   const normalized = path.length > 1 ? path.replace(/\/+$/, "") : path;
   return pages[normalized] ?? NOT_FOUND;

@@ -10,16 +10,17 @@ import ThemeToggle from "./ThemeToggle";
 const navItems = [
   { to: "/projects", label: "Projects" },
   ...(posts.length > 0 || externalWriting.length > 0 ? [{ to: "/blog", label: "Blog" }] : []),
-  { to: "/notes", label: "Research Notes" },
   { to: "/learning", label: "Learning" },
   { to: "/about", label: "About" },
 ];
 
 type NavItem = (typeof navItems)[number];
 
-// Links are plain text that turns the accent colour on hover; the current page is bold.
+// Small uppercase links; the current page is bright with a neon-rose underline.
 function navClass({ isActive }: { isActive: boolean }) {
-  return `transition-colors duration-150 hover:text-accent ${isActive ? "font-bold text-ink" : "text-ink"}`;
+  return `font-mono text-[0.72rem] uppercase tracking-[0.16em] transition-colors duration-150 hover:text-ink ${
+    isActive ? "text-ink underline decoration-signal decoration-2 underline-offset-[7px]" : "text-muted"
+  }`;
 }
 
 function NavItemLink({ item, className = "" }: { item: NavItem; className?: string }) {
@@ -32,7 +33,12 @@ function NavItemLink({ item, className = "" }: { item: NavItem; className?: stri
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
+  const isHome = pathname === "/";
+
+  // On the home page the bar sits transparently over the hero until the page scrolls.
+  const overHero = isHome && !scrolled && !open;
 
   // Close the mobile menu after navigating.
   useEffect(() => {
@@ -49,19 +55,30 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-20 border-b border-rule bg-page">
+    <header
+      className={`sticky top-0 z-20 border-b transition-colors duration-300 ${isHome ? "-mb-[4.5rem]" : ""} ${
+        overHero ? "border-transparent bg-transparent" : "border-rule bg-page/85 backdrop-blur-md"
+      }`}
+    >
       <nav aria-label="Main" className="container-page">
-        <div className="flex h-16 items-center justify-between gap-4">
-          <Link
-            to="/"
-            className="font-display text-lg font-bold tracking-tight whitespace-nowrap text-ink transition-colors duration-150 hover:text-accent"
-          >
-            {site.name}
+        <div className="flex h-[4.5rem] items-center justify-between gap-4">
+          <Link to="/" className="group flex items-center gap-3.5 whitespace-nowrap" aria-label={`${site.name}, home`}>
+            <span className="border border-rule-strong px-2 pt-[5px] pb-[3px] font-display text-xl leading-none font-extrabold text-ink transition-colors duration-150 group-hover:border-ink">
+              GS
+            </span>
+            <span className="eyebrow hidden text-muted sm:inline">{site.name}</span>
           </Link>
 
-          <div className="flex items-center gap-1 md:gap-3">
-            <ul className="mr-2 hidden gap-6 md:flex">
+          <div className="flex items-center gap-2 md:gap-3">
+            <ul className="mr-4 hidden gap-7 md:flex">
               {navItems.map((item) => (
                 <li key={item.label}>
                   <NavItemLink item={item} />
@@ -71,13 +88,13 @@ export default function Navbar() {
 
             <ThemeToggle />
 
-            <a href={site.cvUrl} className="btn btn-primary ml-1 text-[0.9375rem]">
+            <a href={site.cvUrl} className="btn btn-primary px-3.5 py-2.5 text-[0.7rem]">
               CV<span className="sr-only"> (PDF)</span>
             </a>
 
             <button
               type="button"
-              className="-mr-2 ml-1 p-2 text-ink hover:text-accent md:hidden"
+              className="grid size-9 place-items-center border border-rule-strong text-muted hover:border-ink hover:text-ink md:hidden"
               aria-expanded={open}
               aria-controls="mobile-menu"
               onClick={() => setOpen((o) => !o)}
@@ -85,8 +102,8 @@ export default function Navbar() {
               <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
               <svg
                 aria-hidden="true"
-                width="22"
-                height="22"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -99,10 +116,10 @@ export default function Navbar() {
           </div>
         </div>
 
-        <ul id="mobile-menu" hidden={!open} className="border-t border-rule py-2 md:hidden">
+        <ul id="mobile-menu" hidden={!open} className="border-t border-rule py-3 md:hidden">
           {navItems.map((item) => (
             <li key={item.label}>
-              <NavItemLink item={item} className="block py-2.5" />
+              <NavItemLink item={item} className="block py-3" />
             </li>
           ))}
         </ul>

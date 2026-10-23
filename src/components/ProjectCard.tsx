@@ -16,9 +16,9 @@ import Separated from "./Separated";
 export type ProjectCardVariant = "full" | "summary" | "compact" | "idea";
 
 const LABELS: Record<ProjectSection, { text: string; className: string }> = {
-  selected: { text: "Featured project", className: "bg-ink text-page" },
-  other: { text: "Project", className: "bg-tint-blue text-ink" },
-  exploration: { text: "Idea", className: "bg-tint-yellow text-ink" },
+  selected: { text: "Featured project", className: "bg-tint-blue text-ink" },
+  other: { text: "Project", className: "text-muted" },
+  exploration: { text: "Idea", className: "bg-tint-red text-ink" },
 };
 
 /** "First sentence. Second sentence." → "First sentence." */
@@ -104,7 +104,7 @@ export default function ProjectCard({
       <p className={`card-label ${label.className}`}>{label.text}</p>
 
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="font-display text-lg leading-snug font-bold text-ink">
+        <h3 className="font-display text-[1.75rem] leading-[0.95] font-bold text-ink">
           <CardTitle project={project} />
         </h3>
         {variant === "idea" && subtitle && <p className="mt-1 text-muted italic">{subtitle}</p>}

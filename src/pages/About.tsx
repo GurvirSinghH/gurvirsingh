@@ -52,7 +52,7 @@ export default function About() {
       <section aria-labelledby="education" className="mt-12">
         <SectionHeading id="education">Education</SectionHeading>
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
-          <h3 className="font-display text-lg font-bold leading-snug text-ink">
+          <h3 className="font-display text-[1.75rem] leading-[0.95] font-bold text-ink">
             {education.institution}
           </h3>
           <p className="text-sm text-faint">

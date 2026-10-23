@@ -1,9 +1,10 @@
 /**
  * Light/dark mode button.
  *
- * The site is light by default, whatever the system setting. This button turns dark mode
- * on (data-theme="dark" on <html>, remembered in localStorage) and off again; the inline
- * script in index.html applies a remembered choice before the page is drawn.
+ * The site is dark (black) by default, whatever the system setting. This button switches
+ * between data-theme="dark" and data-theme="light" on <html> and remembers the choice in
+ * localStorage; the inline script in index.html applies a remembered choice before the
+ * page is drawn.
  *
  * The icon is picked with CSS (the `dark:` variant in index.css) rather than React
  * state, so the prerendered HTML already shows the right one.
@@ -14,14 +15,11 @@ const STORAGE_KEY = "theme";
 
 function toggleTheme() {
   const root = document.documentElement;
-  const turnDarkOn = root.dataset.theme !== "dark";
-
-  if (turnDarkOn) root.dataset.theme = "dark";
-  else delete root.dataset.theme;
+  const next = root.dataset.theme === "light" ? "dark" : "light";
+  root.dataset.theme = next;
 
   try {
-    if (turnDarkOn) localStorage.setItem(STORAGE_KEY, "dark");
-    else localStorage.removeItem(STORAGE_KEY);
+    localStorage.setItem(STORAGE_KEY, next);
   } catch {
     // Storage can be blocked; the choice then lasts until the page is reloaded.
   }
@@ -29,8 +27,8 @@ function toggleTheme() {
 
 const iconProps = {
   "aria-hidden": true,
-  width: 19,
-  height: 19,
+  width: 17,
+  height: 17,
   viewBox: "0 0 24 24",
   fill: "none",
   stroke: "currentColor",
@@ -44,7 +42,7 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
     <button
       type="button"
       onClick={toggleTheme}
-      className={`p-2 text-ink transition-colors duration-150 hover:text-accent ${className}`}
+      className={`grid size-9 place-items-center border border-rule-strong text-muted transition-colors duration-150 hover:border-ink hover:text-ink ${className}`}
     >
       <span className="block dark:hidden">
         <svg {...iconProps}>
