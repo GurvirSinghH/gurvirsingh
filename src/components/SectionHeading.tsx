@@ -9,11 +9,11 @@ interface SectionHeadingProps {
 
 export default function SectionHeading({ children, id, aside }: SectionHeadingProps) {
   return (
-    <div className="mb-6 flex items-baseline justify-between gap-4 border-b border-rule pb-2">
-      <h2 id={id} className="font-display text-xl font-bold tracking-tight text-ink">
+    <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-rule pb-3">
+      <h2 id={id} className="font-display text-3xl leading-none font-bold text-balance text-ink sm:text-4xl">
         {children}
       </h2>
-      {aside && <div className="text-sm">{aside}</div>}
+      {aside && <div className="font-mono text-[0.72rem] tracking-[0.12em] uppercase">{aside}</div>}
     </div>
   );
 }

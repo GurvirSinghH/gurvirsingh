@@ -37,9 +37,9 @@ function ProgressBar({
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={pct}
-      className={`overflow-hidden rounded-full border border-ink bg-page ${className}`}
+      className={`overflow-hidden border border-rule-strong bg-page ${className}`}
     >
-      <div className="h-full bg-accent" style={{ width: `${pct}%` }} />
+      <div className="h-full bg-cerulean" style={{ width: `${pct}%` }} />
     </div>
   );
 }
@@ -133,7 +133,7 @@ function ProblemCard({ problem }: { problem: DsaProblem }) {
         {problem.topic}
       </p>
       <div className="flex flex-1 flex-col p-4">
-        <h4 className="font-display leading-snug font-bold text-ink">
+        <h4 className="font-display text-2xl leading-[0.95] font-bold text-ink">
           <a href={leetcodeUrl(problem.name)} className="stretched-link hover:text-accent">
             {problem.name}
             <span className="sr-only"> on LeetCode</span>
@@ -162,7 +162,7 @@ function ProblemCard({ problem }: { problem: DsaProblem }) {
 function SubHeading({ id, aside, children }: { id: string; aside?: string; children: string }) {
   return (
     <div className="mb-3 flex items-baseline justify-between gap-4">
-      <h3 id={id} className="font-display text-lg font-bold text-ink">
+      <h3 id={id} className="font-display text-2xl leading-none font-bold text-ink">
         {children}
       </h3>
       {aside && <span className="text-sm text-faint">{aside}</span>}
@@ -174,7 +174,7 @@ function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="card px-3 py-2">
       <dt className="font-mono text-[0.8125rem] text-faint">{label}</dt>
-      <dd className="mt-0.5 font-display text-lg font-bold tabular-nums">{value}</dd>
+      <dd className="mt-1 font-display text-3xl leading-none font-bold tabular-nums">{value}</dd>
     </div>
   );
 }
@@ -244,7 +244,7 @@ export default function Learning() {
           <div aria-label="DSA progress" aria-busy={loading} className="mb-12">
             {state !== "unavailable" && (
               <>
-                <p className="font-display text-2xl tracking-tight text-ink">
+                <p className="font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[0.9] font-extrabold text-ink">
                   <span className="font-semibold tabular-nums">{count(solved)}</span>
                   <span className="text-muted"> of {problems.length} solved</span>
                 </p>
@@ -314,7 +314,7 @@ export default function Learning() {
                     >
                       <path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.5" />
                     </svg>
-                    <span className="font-display font-bold">{topic}</span>
+                    <span className="font-display text-xl leading-none font-bold">{topic}</span>
                   </span>
                   <span className="flex items-center gap-3 text-sm text-faint">
                     {live && (

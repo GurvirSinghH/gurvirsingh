@@ -6,9 +6,9 @@ import { formatDate } from "../lib/formatDate";
 export default function PostCard({ post }: { post: BlogPost }) {
   return (
     <li className="card card-lift">
-      <p className="card-label bg-ink text-page">Blog post</p>
+      <p className="card-label bg-tint-blue text-ink">Blog post</p>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="font-display text-lg leading-snug font-bold text-ink">
+        <h3 className="font-display text-[1.75rem] leading-[0.95] font-bold text-ink">
           <Link to={`/blog/${post.slug}`} className="stretched-link hover:text-accent">
             {post.title}
           </Link>

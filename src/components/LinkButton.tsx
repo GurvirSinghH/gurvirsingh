@@ -11,7 +11,7 @@ interface LinkButtonProps {
   download?: boolean;
 }
 
-const style = "btn text-sm";
+const style = "btn";
 
 export default function LinkButton({ href, children, context, download }: LinkButtonProps) {
   const srContext = context ? <span className="sr-only"> — {context}</span> : null;

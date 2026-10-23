@@ -31,9 +31,9 @@ export default function Notes() {
             <ol className="card-grid">
               {section.items.map((note) => (
                 <li key={note.slug} className="card card-lift">
-                  <p className="card-label bg-tint-green text-ink">Research note</p>
+                  <p className="card-label bg-tint-blue text-ink">Research note</p>
                   <div className="flex flex-1 flex-col p-4">
-                    <h3 className="font-display text-lg leading-snug font-bold text-ink">
+                    <h3 className="font-display text-[1.75rem] leading-[0.95] font-bold text-ink">
                       <Link to={`/notes/${note.slug}`} className="stretched-link hover:text-accent">
                         {note.title}
                       </Link>

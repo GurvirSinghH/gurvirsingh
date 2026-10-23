@@ -28,8 +28,11 @@ npm run preview   # serve the production build
 | External writing (articles on other sites) | `src/data/externalWriting.ts` |
 | Learning page: DSA section (Google Sheet ID, problem list) | `src/data/dsa.ts` |
 | Learning page layout | `src/pages/Learning.tsx` |
-| Colours and fonts (each colour is a `light-dark(light, dark)` pair) | `src/index.css` (`@theme` block) |
-| Light/dark toggle (light by default; dark only when picked with the toggle) | `src/components/ThemeToggle.tsx`, inline script in `index.html` |
+| Colours and fonts (each colour is a `light-dark(light, dark)` pair; fonts load from Google Fonts in `index.html`) | `src/index.css` (`@theme` block) |
+| Light/dark toggle (dark by default; light only when picked with the toggle) | `src/components/ThemeToggle.tsx`, inline script in `index.html` |
+| Home page: text, project reel (order, short text, badges, pictures) | `src/pages/Home.tsx` |
+| Home page styles (all scoped to `.home`) | `src/pages/home.css` |
+| Home page animations, reel controls, IST clock, copy-email button | `src/lib/homeEffects.ts` |
 | Blog article typography | `src/index.css` (`.article` rules) |
 | Cards, their hover effect, and buttons | `src/index.css` (`card`, `card-lift`, `card-label`, `card-grid`, `btn`, `btn-primary`) |
 | Page titles and descriptions (tab title, link previews) | `src/lib/pageMeta.ts` |
@@ -57,7 +60,8 @@ Append an object to `projects` in `src/data/projects.ts`. Only set `github` / `d
 when they really exist; the card shows a link only for fields that are set. Leave
 `technologies` empty to hide the Technology row (e.g. for an idea). Set `section` to `"selected"`
 (Selected Work), `"other"` (Other Projects) or `"exploration"` (ideas); projects appear in each
-section in the order they are listed. The home page shows the `"selected"` projects.
+section in the order they are listed. To show a project in the home page's sideways reel,
+also add it to `REEL` in `src/pages/Home.tsx` with a short blurb, a status badge and a picture.
 
 For a details page: create a component in `src/pages/project-details/`, register it in
 `src/pages/project-details/index.tsx`, and set `details: "/projects/<slug>"` on the project.
