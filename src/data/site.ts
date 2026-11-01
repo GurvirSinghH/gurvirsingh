@@ -38,10 +38,10 @@ export const site = {
   // Shown on the About page: what I am focused on now, then broader interests.
   interests: {
     current: [
+      "AI Engineering",
       "Machine Learning",
       "Physics-Informed Machine Learning",
       "Data Science",
-      "Artificial Intelligence",
     ],
     broader: ["Scientific Computing", "Software Engineering"],
   },

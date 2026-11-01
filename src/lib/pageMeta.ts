@@ -16,7 +16,7 @@ export interface PageMeta {
 const DEFAULT: PageMeta = {
   title: `${site.name} — AI & Data Science`,
   description:
-    "Gurvir Singh — B.Tech CSE student building machine learning tools and learning physics-informed machine learning.",
+    "Gurvir Singh — B.Tech CSE student building machine learning tools and learning AI engineering, from ML foundations to LLMs and agents.",
 };
 
 const NOT_FOUND: PageMeta = {
@@ -37,7 +37,7 @@ const pages: Record<string, PageMeta> = {
   "/blog": page("Blog", "Longer pieces on things I am learning, building, and trying to understand."),
   "/learning": page(
     "Learning",
-    "What I am learning right now: machine learning and physics-informed machine learning.",
+    "What I am learning right now: AI engineering and physics-informed machine learning.",
   ),
   "/about": page(
     "About",

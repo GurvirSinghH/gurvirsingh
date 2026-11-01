@@ -1,4 +1,4 @@
-% Gurvir Singh — one-page CV
+% Gurvir Singh — one-page CV, aimed at AI engineering internships
 %
 % Build (from the project root, with a LaTeX distribution such as MiKTeX):
 %   pdflatex -output-directory=cv/build cv/gurvir-singh-cv.tex
@@ -12,13 +12,15 @@
 \usepackage[T1]{fontenc}
 % Use the scalable Type 1 cm-super fonts (some installations do not map them by default).
 \pdfmapfile{+cm-super-t1.map}
-\usepackage[a4paper, left=0.8in, right=0.8in, top=0.72in, bottom=0.55in]{geometry}
+\usepackage[a4paper, left=0.75in, right=0.75in, top=0.6in, bottom=0.5in]{geometry}
 \usepackage{microtype}
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage[hidelinks,
   pdftitle={Gurvir Singh - Curriculum Vitae},
-  pdfauthor={Gurvir Singh}]{hyperref}
+  pdfauthor={Gurvir Singh},
+  pdfsubject={AI engineering internship},
+  pdfkeywords={AI engineering, LLM, machine learning, Python}]{hyperref}
 
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
@@ -26,7 +28,7 @@
 
 % ── Section headings: large bold small caps over a full-width rule ───────────
 \titleformat{\section}{\Large\bfseries\scshape\raggedright}{}{0pt}{}[{\vspace{-2pt}\titlerule[1.3pt]}]
-\titlespacing*{\section}{0pt}{9pt}{5pt}
+\titlespacing*{\section}{0pt}{6pt}{3pt}
 
 % ── Entries ─────────────────────────────────────────────────────────────────
 % \entry{bold left}{bold right}
@@ -36,20 +38,23 @@
 % \project{name}{url}{note}{stack}
 \newcommand{\project}[4]{%
   \hspace*{6pt}\textbf{\href{#2}{#1}}#3\hfill\textit{#4}\par}
+% \projectnolink{name}{note}{stack}, for work without a public repository
+\newcommand{\projectnolink}[3]{%
+  \hspace*{6pt}\textbf{#1}#2\hfill\textit{#3}\par}
 
 % Bullet lists
 \setlist[itemize]{label=$\bullet$, leftmargin=34pt, labelsep=6pt,
   topsep=2pt, itemsep=1pt, parsep=0pt, partopsep=0pt}
 \newenvironment{projectitems}
   {\begin{itemize}[topsep=1pt, itemsep=0.5pt]}
-  {\end{itemize}\vspace{4pt}}
+  {\end{itemize}\vspace{3pt}}
 
 \begin{document}
 
 % ── Name and contact ────────────────────────────────────────────────────────
 \begin{center}
   {\LARGE\bfseries\scshape Gurvir Singh}\\[2pt]
-  Third-Year Undergraduate Student
+  Third-Year B.Tech Student \textbullet\ Seeking an AI Engineering Internship
 \end{center}
 \vspace{-4pt}
 
@@ -58,51 +63,42 @@
 \begin{tabular}[t]{@{}l@{}}
   Computer Science \& Engineering\\
   (Artificial Intelligence \& Data Science)\\
-  GNA University
+  GNA University, Punjab, India
 \end{tabular}%
 \hfill
 \begin{tabular}[t]{@{}r@{}}
-  \href{mailto:gurvir.singh.panesar@gmail.com}{gurvir.singh.panesar@gmail.com}\\
-  +91 9592592881\\
-  \href{https://github.com/GurvirSinghH}{github.com/GurvirSinghH}
+  \href{mailto:gurvir.singh.panesar@gmail.com}{gurvir.singh.panesar@gmail.com} \textbullet\ +91 9592592881\\
+  \href{https://github.com/GurvirSinghH}{github.com/GurvirSinghH}\\
+  \href{https://gurvirsingh.in}{gurvirsingh.in}
 \end{tabular}%
 \hspace*{3pt}
 
-% ── Research interests ──────────────────────────────────────────────────────
-\section{Research Interests}
-\begin{itemize}
-  \item Machine learning and data science: data processing, analysis, and visualization
-  \item Physics-informed machine learning and scientific computing (currently learning the basics)
-  \item Intelligent systems: applying AI/ML methods within practical software systems
-\end{itemize}
+% ── Profile ─────────────────────────────────────────────────────────────────
+\section{Profile}
+\hspace*{6pt}\parbox{\dimexpr\linewidth-6pt}{%
+  Computer Science (AI \& Data Science) student who builds working AI tools end to end in Python: an
+  LLM assistant that writes code, runs it and feeds errors back to the model to fix; an ML app that
+  flags anomalies in system logs; and a crawler that turns a website into a retrieval-ready dataset.}
 
-% ── Education ───────────────────────────────────────────────────────────────
-\section{Education}
-\entry{GNA University}{Expected 2028}
-\detail{B.Tech, Computer Science \& Engineering (Artificial Intelligence \& Data Science)}{}
-\detail{Third year}{CGPA: 8.13/10}
-\detail{Current coursework: Data Visualization, Theory of Computation,}{}
-\detail{\phantom{Current coursework: }Software Engineering, Computer Graphics}{}
-
-% ── Selected projects ───────────────────────────────────────────────────────
-\section{Selected Projects}
-
-\project{AI Log Intelligence Platform}{https://github.com/GurvirSinghH/AI-Log-Intelligence-Platform}%
-  { (ongoing)}{Python, Streamlit, Pandas, Scikit-learn, Plotly}
-\begin{projectitems}
-  \item Streamlit application that detects and parses Linux auth/syslog and Apache access/error logs,
-        with summary statistics, keyword search, Plotly charts, and an optional Gemini incident report.
-  \item Label-encoded process, module, and host fields plus PID, message length, and hour feed an
-        Isolation Forest anomaly detector; K-Means then clusters the flagged entries.
-\end{projectitems}
+% ── Projects ────────────────────────────────────────────────────────────────
+\section{Projects}
 
 \project{Neural Forge (AI Blender Assistant)}{https://github.com/GurvirSinghH/neural-forge}%
-  {}{Python, Blender Python API, LLM APIs}
+  { (v1.0.0)}{Python, Blender Python API, LLM APIs}
 \begin{projectitems}
-  \item Blender add-on that turns natural-language prompts into Blender Python scripts using Gemini,
-        OpenAI, local Ollama models, or any OpenAI-compatible endpoint through one API client.
-  \item Optionally adds scene context (objects, active selection) to prompts, runs generated code, and
-        sends runtime errors back to the model for an automatic fix.
+  \item Blender add-on that turns natural-language prompts into Blender Python scripts, with one
+        client for Gemini, OpenAI, local Ollama models and any OpenAI-compatible endpoint.
+  \item Adds scene context (objects, selection) to the prompt, runs the generated code and sends errors
+        back to the model to fix them: an agent-style generate, run and repair loop.
+\end{projectitems}
+
+\project{AI Log Intelligence Platform}{https://github.com/GurvirSinghH/AI-Log-Intelligence-Platform}%
+  { (in development)}{Python, Streamlit, Pandas, Scikit-learn, Plotly}
+\begin{projectitems}
+  \item Streamlit app that detects and parses Linux auth/syslog and Apache access/error logs, with summary
+        statistics, keyword search, Plotly charts and an optional Gemini-drafted incident report.
+  \item Label-encoded process, module and host fields plus PID, message length and hour feed an
+        Isolation Forest anomaly detector; K-Means then clusters the flagged entries.
 \end{projectitems}
 
 \project{College Knowledge Base Crawler}{https://github.com/GurvirSinghH/college-rag-assistant}%
@@ -110,37 +106,49 @@
 \begin{projectitems}
   \item Multi-threaded crawler (worker pool and task queue) with robots.txt compliance, a shared rate
         limit, URL normalization, and retries with exponential backoff that respect Retry-After.
-  \item Extracts page content and metadata to JSON, downloads linked documents, and records crawl
-        state in SQLite, producing a structured dataset for a future RAG pipeline (not yet built).
+  \item Extracts page content and metadata to JSON, downloads linked documents and records crawl
+        state in SQLite, as the data layer for a RAG pipeline (retrieval step not built yet).
 \end{projectitems}
 
-\project{CodeEditor}{https://github.com/GurvirSinghH/CodeEditor}%
-  { (2nd-year project)}{Java, Swing, MySQL, JDBC}
+\projectnolink{Home Energy Monitor}{ (in progress)}{ESP32, PZEM-004T, Fedora Linux}
 \begin{projectitems}
-  \item Desktop code editor with multi-tab editing, token-based syntax highlighting for Java, Python,
-        and HTML, line numbers, and find and replace.
-  \item Stores recent files, a code-snippet library, and open-tab sessions in MySQL through JDBC
-        data-access objects, restoring the previous session on startup.
+  \item An ESP32 with a PZEM-004T meter sends household power readings to my self-hosted Fedora server
+        (message broker and logger); a simulated dry run works. Next: recognise which appliance is
+        running from its power signature and estimate the monthly bill.
 \end{projectitems}
-\vspace{-4pt}
+
+\hspace*{6pt}\parbox{\dimexpr\linewidth-6pt}{%
+  \textit{Also built:} \href{https://github.com/GurvirSinghH/CodeEditor}{CodeEditor} (Java Swing editor,
+  MySQL over JDBC), \href{https://github.com/GurvirSinghH/csv-cleaner}{CSV Cleaner} (Python data cleaning),
+  \href{https://github.com/GurvirSinghH/MLlab}{ML Lab} (Scikit-learn notebooks).}
+\vspace{-2pt}
 
 % ── Technical skills ────────────────────────────────────────────────────────
 \section{Technical Skills}
 \hspace*{6pt}%
-\begin{tabular}{@{}l@{\hspace{14pt}}l@{}}
-  \textit{Programming}        & Python, C, C++, Java\\
-  \textit{Data and ML}        & Machine learning, data processing, data visualization\\
-  \textit{Libraries and tools} & NumPy, Pandas, Scikit-learn, Plotly, Streamlit, Git, GitHub
+\begin{tabular}{@{}l@{\hspace{12pt}}p{0.82\linewidth}@{}}
+  \textit{Languages}       & Python (primary), C++, C, Java, HTML, CSS\\
+  \textit{AI and LLMs}     & Gemini, OpenAI, Ollama and OpenAI-compatible APIs; prompt and context design;
+                             LLM code generation with error feedback\\
+  \textit{ML and data}     & Scikit-learn (Isolation Forest, K-Means, decision trees, regression), NumPy,
+                             Pandas, Matplotlib, Seaborn, Plotly\\
+  \textit{Tools}           & Streamlit, Git/GitHub, Jupyter, SQLite, MySQL, Linux (Fedora), SSH, Tailscale\\
+  \textit{Fundamentals}    & Data structures and algorithms (practised in Python and C++)
 \end{tabular}
 
-% ── Current focus ───────────────────────────────────────────────────────────
-\section{Current Focus}
+% ── Education ───────────────────────────────────────────────────────────────
+\section{Education}
+\entry{GNA University}{Expected 2028}
+\detail{B.Tech, Computer Science \& Engineering (AI \& Data Science), third year}{CGPA: 8.13/10}
+\detail{Coursework: Data Visualization, Software Engineering, Theory of Computation, Computer Graphics}{}
+
+% ── Currently learning ──────────────────────────────────────────────────────
+\section{Currently Learning}
 \begin{itemize}
-  \item Strengthening my machine learning fundamentals, to apply ML across different fields.
-  \item Learning how known physics can be built into model training, e.g.\ through the loss function,
-        and keeping written research notes as I study physics-informed machine learning.
-  \item Early idea, not implemented: whether physics-based models combined with machine learning
-        could help reason about hidden energy states in public Formula 1 telemetry.
+  \item \textbf{AI engineering:} working through
+        \href{https://github.com/rohitg00/ai-engineering-from-scratch}{AI Engineering from Scratch},
+        an open-source course from math and ML foundations through deep learning to LLMs, RAG and agents.
+  \item \textbf{Physics-informed ML:} building known physics into model training, e.g.\ via the loss function.
 \end{itemize}
 
 \end{document}
