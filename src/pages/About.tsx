@@ -29,8 +29,8 @@ export default function About() {
           Data Science.
         </p>
         <p>
-          I am currently exploring machine learning, data science, and physics-informed machine
-          learning. What interests me most about machine learning is not being tied to one
+          I am currently working through an AI engineering course, from math and ML foundations to
+          LLMs, RAG and agents, and learning physics-informed machine learning. What interests me most about machine learning is not being tied to one
           application or field, but understanding it well enough to use it when a problem calls
           for it. More generally, I get curious about technical problems even when they fall
           outside my specialization.

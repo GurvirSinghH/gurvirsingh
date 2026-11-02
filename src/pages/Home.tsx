@@ -122,7 +122,8 @@ export default function Home() {
           <div className="hm-hero-foot">
             <p className="hm-lede">
               I build machine learning tools for messy real-world data, from log anomaly detection to
-              LLM-driven Blender scripting. Right now I'm learning physics-informed machine learning.
+              LLM-driven Blender scripting. Right now I'm working through an AI engineering course, from ML
+              foundations to LLMs and agents.
             </p>
             <div className="hm-cta-row">
               <a className="hm-btn hm-btn-solid" href="#work">
@@ -144,7 +145,7 @@ export default function Home() {
               I enjoy learning how things work, building with what I learn, and solving problems along the
               way.{" "}
               <span className="hm-soft">
-                Right now that means AI, machine learning, data science and physics-informed ML, plus a wider
+                Right now that means AI engineering, machine learning and physics-informed ML, plus a wider
                 curiosity about where technology meets other fields.
               </span>
             </p>
@@ -248,6 +249,12 @@ export default function Home() {
                 <li key={item.topic}>
                   <h3>{item.topic}</h3>
                   <p>{item.note}</p>
+                  {item.link && (
+                    <a className="hm-more" href={item.link.url}>
+                      {item.link.label}
+                      <span className="sr-only">: {item.topic}</span> <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

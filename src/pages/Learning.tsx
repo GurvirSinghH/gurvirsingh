@@ -17,7 +17,17 @@ export default function Learning() {
             <h2 className="font-display text-[clamp(2.4rem,6vw,5rem)] leading-[0.9] font-extrabold text-balance text-ink">
               {item.topic}
             </h2>
-            <p className="max-w-xl text-lg leading-relaxed text-muted">{item.note}</p>
+            <div className="max-w-xl">
+              <p className="text-lg leading-relaxed text-muted">{item.note}</p>
+              {item.link && (
+                <p className="mt-4 font-mono text-[0.72rem] tracking-[0.12em] uppercase">
+                  <a href={item.link.url} className="link">
+                    {item.link.label}
+                    <span className="sr-only">: {item.topic}</span> <span aria-hidden="true">↗</span>
+                  </a>
+                </p>
+              )}
+            </div>
           </li>
         ))}
       </ul>
